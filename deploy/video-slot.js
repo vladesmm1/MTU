@@ -211,6 +211,7 @@
         v.addEventListener('timeupdate', () => { if (v.duration && v.currentTime > v.duration - 0.12) { v.currentTime = 0.01; v.play().catch(() => {}); } });
         v.style.cssText = 'display:block;width:100%;height:100%;object-fit:cover;background:#14171B;transform:translateZ(0);backface-visibility:hidden;will-change:transform;';
         v.play && v.play().catch(() => {});
+        v.addEventListener('loadedmetadata', () => { if (v.videoWidth && v.videoHeight) { this._frame.style.height = 'auto'; v.style.height = 'auto'; v.style.aspectRatio = v.videoWidth + '/' + v.videoHeight; v.style.objectFit = 'contain'; } });
         f.appendChild(v);
         if (wm) {
           const m = document.createElement('img');
@@ -307,6 +308,7 @@
 
     _tools() {
       const wrap = document.createElement('div');
+      if (!(window.omelette && window.omelette.writeFile)) { wrap.style.display = 'none'; return wrap; }
       wrap.style.cssText = 'position:absolute;left:12px;top:12px;display:flex;gap:8px;z-index:2;';
       const rep = this._miniBtn('Заменить');
       rep.addEventListener('click', (e) => { e.stopPropagation(); this._file.click(); });
