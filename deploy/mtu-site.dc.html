@@ -1,0 +1,1825 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@400;500;600&display=swap">
+<script src="./image-slot.js"></script>
+<script src="./slots-data-1.js"></script>
+<script src="./slots-data-2.js"></script>
+<script src="./slots-data-3.js"></script>
+<script src="./slots-data-4.js"></script>
+<script src="./slots-data-5.js"></script>
+<script src="./slots-data-apply.js"></script>
+<script src="./video-slot.js?v=4"></script>
+<script src="./mtu-pages.js?v=9"></script>
+<script src="./mtu-enhance.js?v=1"></script>
+<style>
+  button,input,select,textarea,option{font-family:'IBM Plex Sans',sans-serif}
+
+  html, body { margin: 0; padding: 0; background: #22262C; }
+  a { color: #fff; text-decoration: none; }
+  .mtu-wm { position: absolute; right: 12px; bottom: 12px; width: 11%; min-width: 50px; max-width: 104px; opacity: 0.36; pointer-events: none; user-select: none; filter: drop-shadow(0 1px 3px rgba(0,0,0,0.5)); }
+  image-slot:not([data-filled]) + .mtu-wm, image-slot[data-reframe] + .mtu-wm, image-slot[data-over] + .mtu-wm { display: none; }
+  /* Объёмная иконка: стеклянный глиф на графитовой шайбе с фирменной подсветкой */
+  .ico3d { position: relative; display: inline-flex; align-items: flex-start; justify-content: center;
+    width: var(--s, 54px); height: var(--s, 54px); flex-shrink: 0; }
+  .ico3d { align-items: center; }
+  .ico3d > svg { position: relative; z-index: 2; box-sizing: border-box; width: 100%; height: 100%;
+    padding: 28%; border-radius: 9999px; background: #E3A93B; box-shadow: none;
+    stroke: #2B2F36 !important; stroke-width: 2.2; fill: none; transition: background 150ms ease; }
+  a:hover .ico3d > svg, button:hover .ico3d > svg { background: #F0BC5A; }
+  a:has(> .ico3d:last-child) { box-shadow: 0 16px 32px -14px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.28) !important; transition: transform 200ms ease, box-shadow 200ms ease, background 150ms ease !important; }
+  a:has(> .ico3d:last-child):hover { transform: translateY(-3px); box-shadow: 0 24px 40px -14px rgba(0,0,0,0.65), inset 0 1px 0 rgba(255,255,255,0.35) !important; }
+  a:has(> .ico3d:last-child) { gap: 36px !important; padding: 22px 0 22px 40px !important; overflow: hidden; }
+  a > .ico3d:last-child { width: 104px !important; height: auto !important; align-self: stretch; margin: -22px 0 -22px 0; background: linear-gradient(135deg, #FFF1C4 0%, #F5C763 45%, #B8821F 100%); clip-path: polygon(0 0, 62% 0, 100% 50%, 62% 100%, 0 100%, 34% 50%); transition: transform 220ms ease; }
+  a > .ico3d:last-child::after { content: ''; position: absolute; inset: 0; transform: translateX(-9px); clip-path: polygon(0 0, 62% 0, 100% 50%, 62% 100%, 0 100%, 34% 50%); background: linear-gradient(180deg, #3E434B 0%, #1B1E23 100%); }
+  a > .ico3d:last-child > svg { display: none; }
+  a:hover > .ico3d:last-child { transform: translateX(8px); }
+  a[data-chev] > .ico3d:last-child { background: linear-gradient(135deg, #FFFFFF 0%, #FFE7A6 40%, #E3A93B 100%); }
+  a[data-chev] > .ico3d:last-child::after { background: linear-gradient(180deg, #F5C763 0%, #E3A93B 55%, #B8821F 100%); }
+  a:hover { color: #fff; }
+  @media (max-width: 1150px) { nav { gap: 12px; } [data-nav-links] { font-size: 13px; } }
+  @media (max-width: 720px) { [data-nav-links] { display: none !important; } }
+  @media (max-width: 1440px) { [data-hero-img] { right: -28px !important; height: 128% !important; top: -14% !important; } }
+  @media (max-width: 1280px) { [data-hero-grid] { grid-template-columns: minmax(0,1fr) minmax(0,1.08fr) !important; gap: 28px !important; } [data-hero-img] { right: -8px !important; height: 120% !important; top: -10% !important; } }
+  @media (max-width: 1120px) { [data-hero-grid] { grid-template-columns: minmax(0,1fr) minmax(0,0.92fr) !important; gap: 24px !important; } [data-hero-media] { min-height: 440px !important; } [data-hero-img] { right: 0 !important; top: -6% !important; height: 112% !important; } }
+  @media (max-width: 960px) { [data-hero-grid] { grid-template-columns: minmax(0,1fr) minmax(0,0.8fr) !important; } [data-hero-img] { height: 104% !important; top: -2% !important; } }
+  @media (max-width: 1000px) { [data-float-cta] { display: none !important; } }
+  @keyframes spinUnit { from { transform: rotateX(12deg) rotateY(-25deg); } to { transform: rotateX(12deg) rotateY(335deg); } }
+  @keyframes blockIn { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
+  @keyframes traceLink { from { stroke-dashoffset: 240; } to { stroke-dashoffset: 0; } }
+  @keyframes orbitDrift { 0%,100% { transform: translate(0,0); } 50% { transform: translate(2px,-3px); } }
+  @keyframes waveDrift { from { transform: translateX(0); } to { transform: translateX(-240px); } }
+  @keyframes waveSlide { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @keyframes cWeave0 { 0%,100% { transform: translateY(0); } 50% { transform: translateY(3px); } }
+  @keyframes cWeave1 { 0%,100% { transform: translateY(2px); } 50% { transform: translateY(-3px); } }
+  @keyframes cWeave2 { 0%,100% { transform: translateY(-2px); } 50% { transform: translateY(4px); } }
+  @keyframes cWeave3 { 0%,100% { transform: translateY(1px); } 50% { transform: translateY(-4px); } }
+  @keyframes cFlow { from { stroke-dashoffset: 300; } to { stroke-dashoffset: -300; } }
+  @keyframes waveBreathe { 0%,100% { transform: translateY(0) scaleY(1); } 50% { transform: translateY(-6px) scaleY(1.06); } }
+  @keyframes edgeGlow { 0%,100% { opacity: 0.75; } 50% { opacity: 1; } }
+  @keyframes heroFadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
+  @keyframes heroScaleIn { from { opacity: 0; transform: scale(0.94); } to { opacity: 1; transform: none; } }
+  @keyframes heroFadeIn70 { from { opacity: 0; } to { opacity: 1; } }
+</style>
+</helmet>
+<div style="position: relative; width: 100%; minHeight: 100vh; background: #22262C; backgroundImage: radial-gradient(110% 55% at 80% 3%, rgba(138,162,192,0.32), rgba(34,38,44,0) 56%), radial-gradient(80% 40% at 4% 22%, rgba(96,120,150,0.22), rgba(34,38,44,0) 55%), radial-gradient(70% 35% at 94% 44%, rgba(122,146,176,0.18), rgba(34,38,44,0) 55%), radial-gradient(65% 34% at 10% 62%, rgba(90,112,140,0.16), rgba(34,38,44,0) 55%), radial-gradient(75% 36% at 62% 86%, rgba(122,146,176,0.15), rgba(34,38,44,0) 55%); color: #fff; overflow: hidden; fontFamily: 'IBM Plex Sans', sans-serif;">
+
+  <div style="position: absolute; inset: 0; zIndex: 0; overflow: hidden; pointerEvents: none;">
+    <div style="position: absolute; top: 520px; right: -150px; width: 440px; height: 440px; border: 1px solid rgba(227,169,59,0.2); transform: rotate(24deg);"></div>
+    <div style="position: absolute; top: 1420px; left: -190px; width: 500px; height: 500px; borderRadius: 9999px; border: 1px solid rgba(62,90,122,0.45);"></div>
+    <div style="position: absolute; top: 2280px; right: 7%; width: 210px; height: 210px; background: rgba(181,82,58,0.13); transform: rotate(45deg);"></div>
+    <div style="position: absolute; top: 3120px; left: 5%; width: 290px; height: 290px; borderRadius: 9999px; border: 1px solid rgba(227,169,59,0.15);"></div>
+    <div style="position: absolute; top: 4020px; right: -80px; width: 360px; height: 360px; background: rgba(62,90,122,0.15); transform: rotate(18deg);"></div>
+    <div style="position: absolute; top: 200px; left: -130px; width: 330px; height: 330px; border: 1px solid rgba(62,90,122,0.4); transform: rotate(14deg);"></div>
+    <div style="position: absolute; top: 1880px; right: 16%; width: 230px; height: 230px; borderRadius: 9999px; border: 1px solid rgba(227,169,59,0.18);"></div>
+    <div style="position: absolute; top: 5340px; right: -110px; width: 380px; height: 380px; borderRadius: 9999px; border: 1px solid rgba(62,90,122,0.4);"></div>
+    <div style="position: absolute; top: 6060px; left: 13%; width: 190px; height: 190px; background: rgba(181,82,58,0.12); transform: rotate(24deg);"></div>
+    <div style="position: absolute; top: 7560px; left: -90px; width: 340px; height: 340px; borderRadius: 9999px; border: 1px solid rgba(181,82,58,0.22);"></div>
+  </div>
+
+  <div style="position: fixed; top: 12px; left: 24px; right: 24px; zIndex: 55; height: 44px; display: flex; alignItems: center; justifyContent: space-between; gap: 16px; padding: 0 24px; borderRadius: 16px 16px 0 0; background: rgba(20,23,27,0.5); backdropFilter: blur(18px); borderBottom: 1px solid rgba(255,255,255,0.14); fontFamily: 'IBM Plex Sans', sans-serif; fontSize: 14px; fontWeight: 400; letterSpacing: 0.02em; color: rgba(255,255,255,0.92);">
+    <span style="display: flex; alignItems: center; gap: 10px; minWidth: 0;">
+      <span style="width: 8px; height: 8px; borderRadius: 9999px; background: #E3A93B; flexShrink: 0;"></span>
+      Собственное производство — г. Балашиха, Московская область
+    </span>
+    <div style="position: relative; display: flex; alignItems: center; gap: 14px; height: 100%; flexShrink: 0;">
+      <span data-hdr-org="1" style="whiteSpace: nowrap; color: rgba(255,255,255,0.8);">ООО «ГК МТУ»</span>
+      <button type="button" onClick="{{ toggleContact }}" style="display: flex; alignItems: center; gap: 8px; height: 32px; padding: 0 14px; borderRadius: 4px; background: #E3A93B; border: none; cursor: pointer; fontFamily: inherit; fontSize: 14px; fontWeight: 500; color: #1B1E23; transition: background 150ms ease;" style-hover="background: #F0BC5A;">
+        Связаться
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg>
+      </button>
+      <sc-if value="{{ contactOpen }}" hint-placeholder-val="{{ false }}">
+        <div style="position: absolute; top: 100%; right: 0; width: 280px; display: grid; gap: 6px; padding: 10px; borderRadius: 0 0 8px 8px; background: #1B1E23; border: 1px solid rgba(255,255,255,0.12); borderTop: none; boxShadow: 0 24px 48px rgba(0,0,0,0.5); zIndex: 70;">
+          <a href="https://t.me/gkmtu_bot" target="_blank" rel="noopener" style="display: flex; alignItems: center; justifyContent: space-between; minHeight: 44px; padding: 0 14px; borderRadius: 4px; background: rgba(255,255,255,0.06); color: #fff; fontSize: 15px; fontWeight: 400; transition: background 140ms ease;" style-hover="background: rgba(227,169,59,0.2); color: #fff;">Telegram<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E3A93B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"></path></svg></a>
+          <a href="https://wa.me/79167656565" target="_blank" rel="noopener" style="display: flex; alignItems: center; justifyContent: space-between; minHeight: 44px; padding: 0 14px; borderRadius: 4px; background: rgba(255,255,255,0.06); color: #fff; fontSize: 15px; fontWeight: 400; transition: background 140ms ease;" style-hover="background: rgba(227,169,59,0.2); color: #fff;">WhatsApp<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E3A93B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"></path></svg></a>
+          <a href="mailto:info@gkmtu.ru" style="display: flex; alignItems: center; justifyContent: space-between; minHeight: 44px; padding: 0 14px; borderRadius: 4px; background: rgba(255,255,255,0.06); color: #fff; fontSize: 15px; fontWeight: 400; transition: background 140ms ease;" style-hover="background: rgba(227,169,59,0.2); color: #fff;">E-mail<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E3A93B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"></path></svg></a>
+          <a href="tel:+79167656565" style="display: flex; alignItems: center; justifyContent: space-between; minHeight: 44px; padding: 0 14px; borderRadius: 4px; background: rgba(255,255,255,0.06); color: #fff; fontSize: 15px; fontWeight: 400; transition: background 140ms ease;" style-hover="background: rgba(227,169,59,0.2); color: #fff;">+7 (916) 765-65-65<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E3A93B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"></path></svg></a>
+        </div>
+      </sc-if>
+    </div>
+  </div>
+  <nav style="position: fixed; top: 56px; left: 24px; right: 24px; zIndex: 50; display: flex; alignItems: center; justifyContent: space-between; gap: 20px; padding: 12px 24px; borderRadius: 0 0 16px 16px; background: rgba(34,38,44,0.42); backdropFilter: blur(18px); borderBottom: 1px solid rgba(255,255,255,0.1);">
+    <a href="{{ homeHref }}" onClick="{{ onHome }}" style="display: flex; alignItems: center; gap: 10px; color: #fff; flexShrink: 0;">
+      <img src="{{ srcMark }}" alt="ГК «МТУ»" style="height: 28px; width: auto; display: block;">
+      <span style="fontSize: 15px; fontWeight: 600; letterSpacing: 0.02em;">ГК «МТУ»</span>
+    </a>
+    <div style="display: flex; alignItems: center; gap: 4px; fontSize: 14px; fontWeight: 500; flexShrink: 1; minWidth: 0; whiteSpace: nowrap;">
+      <a href="{{ homeHref }}" onClick="{{ onHome }}" style="display: flex; alignItems: center; padding: 8px 12px; borderRadius: 4px; color: #E3A93B; fontSize: 13px; fontWeight: 500; letterSpacing: 0.04em; textTransform: uppercase; whiteSpace: nowrap; transition: background 150ms ease;" style-hover="background: rgba(255,255,255,0.1); color: #E3A93B;">
+        Главная
+      </a>
+      <sc-for list="{{ topNav }}" as="link" hint-placeholder-count="5">
+        <div data-nav-links="1" onMouseEnter="{{ link.onEnter }}" onMouseLeave="{{ link.onLeave }}" style="position: relative; display: flex; alignItems: center;">
+          <button type="button" onClick="{{ link.go }}" style="display: flex; alignItems: center; gap: 6px; background: transparent; border: none; padding: 8px 12px; borderRadius: 4px; cursor: pointer; fontFamily: inherit; fontSize: 13px; fontWeight: 500; letterSpacing: 0.04em; textTransform: uppercase; whiteSpace: nowrap; color: {{ link.color }}; transition: color 150ms ease, background 150ms ease;" style-hover="color: #fff; background: rgba(255,255,255,0.1);">
+            {{ link.title }}
+            <sc-if value="{{ link.hasSub }}" hint-placeholder-val="{{ false }}">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="transform: {{ link.caret }}; transition: transform 160ms ease;"><path d="m6 9 6 6 6-6"></path></svg>
+            </sc-if>
+          </button>
+          <sc-if value="{{ link.dropOpen }}" hint-placeholder-val="{{ false }}">
+          <div style="position: absolute; top: 100%; left: -14px; paddingTop: 12px; display: grid; gap: 2px; minWidth: 288px; zIndex: 60;">
+            <div style="display: grid; gap: 2px; padding: 10px; borderRadius: 8px; background: rgba(20,23,27,0.96); backdropFilter: blur(20px); border: 1px solid rgba(255,255,255,0.12); boxShadow: 0 24px 48px rgba(0,0,0,0.45);">
+              <sc-for list="{{ link.sub }}" as="item" hint-placeholder-count="8">
+                <button type="button" onClick="{{ item.go }}" style="display: flex; alignItems: baseline; justifyContent: space-between; gap: 14px; textAlign: left; padding: 9px 12px; borderRadius: 4px; background: transparent; border: none; cursor: pointer; fontFamily: inherit; fontSize: 14px; fontWeight: 500; color: {{ item.color }}; transition: background 140ms ease;" style-hover="background: rgba(227,169,59,0.16);">
+                  <span style="whiteSpace: nowrap;">{{ item.title }}</span>
+                  <span style="fontSize: 11px; letterSpacing: 0.06em; textTransform: uppercase; color: rgba(255,255,255,0.4); whiteSpace: nowrap;">{{ item.note }}</span>
+                </button>
+              </sc-for>
+            </div>
+          </div>
+          </sc-if>
+        </div>
+      </sc-for>
+    </div>
+    <div style="display: flex; alignItems: center; gap: 14px; flexShrink: 0;">
+      <a href="tel:+79167656565" style="background: #fff; color: #2B2F36; borderRadius: 9999px; padding: 12px 22px; fontSize: 14px; fontWeight: 600; whiteSpace: nowrap;" style-hover="color: #2B2F36; boxShadow: 0 0 20px rgba(255,255,255,0.25);">+7 (916) 765-65-65</a>
+    </div>
+  </nav>
+
+  <div>
+    <div style="position: fixed; inset: 0; zIndex: 60; padding: 88px 40px 40px; background: rgba(20,23,27,0.92); backdropFilter: blur(22px); overflowY: auto; display: {{ menuDisplay }};">
+      <div style="maxWidth: 1180px; margin: 0 auto; display: flex; flexDirection: column; gap: 28px;">
+        <div style="display: flex; alignItems: center; justifyContent: space-between; gap: 20px;">
+          <span style="fontSize: 13px; letterSpacing: 0.16em; textTransform: uppercase; color: rgba(255,255,255,0.5);">Структура сайта</span>
+          <button type="button" onClick="{{ toggleMenu }}" style="padding: 9px 16px; borderRadius: 4px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.14); cursor: pointer; fontFamily: inherit; fontSize: 14px; color: #fff;">Закрыть</button>
+        </div>
+        <div style="display: grid; gridTemplateColumns: repeat(5, 1fr); gap: 20px;">
+          <sc-for list="{{ menuGroups }}" as="group" hint-placeholder-count="5">
+            <div style="minWidth: 0; display: flex; flexDirection: column; gap: 14px; padding: 24px; borderRadius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);">
+              <span style="fontSize: 12px; letterSpacing: 0.14em; textTransform: uppercase; color: rgba(227,169,59,0.95);">{{ group.title }}</span>
+              <sc-for list="{{ group.items }}" as="item" hint-placeholder-count="5">
+                <button type="button" onClick="{{ item.go }}" style="background: transparent; border: none; padding: 0; textAlign: left; cursor: pointer; fontFamily: inherit; fontSize: 16px; lineHeight: 1.5; color: {{ item.color }}; transition: color 150ms ease;" style-hover="color: #fff;">{{ item.title }}</button>
+              </sc-for>
+            </div>
+          </sc-for>
+        </div>
+        <a href="{{ homeHref }}" onClick="{{ onHome }}" style="fontSize: 16px; color: rgba(255,255,255,0.6);" style-hover="color: #fff;">← Главная страница сайта</a>
+      </div>
+    </div>
+  </div>
+
+  <sc-if value="{{ heroLight }}" hint-placeholder-val="{{ false }}">
+    <section style="position: relative; overflow: hidden; background: transparent; color: #fff; borderBottom: 4px solid #E3A93B;">
+      <sc-if value="{{ hasHeroBg }}" hint-placeholder-val="{{ false }}">
+        <div style="position: absolute; inset: 0; backgroundImage: {{ heroBgImage }}; backgroundSize: auto, cover; backgroundPosition: center, 70% 55%; opacity: 0.55; maskImage: linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, #000 45%, rgba(0,0,0,0.15) 100%); WebkitMaskImage: linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, #000 45%, rgba(0,0,0,0.15) 100%); pointerEvents: none;"></div>
+      </sc-if>
+      <div style="position: absolute; top: -20%; left: 6%; width: 520px; height: 520px; borderRadius: 9999px; background: rgba(62,90,122,0.28); filter: blur(140px); mixBlendMode: screen; pointerEvents: none;"></div>
+      <div style="position: relative; maxWidth: 1180px; margin: 0 auto; padding: 130px 24px 64px; display: grid; gridTemplateColumns: 1.15fr 1fr; gap: 56px; alignItems: end;">
+        <div style="minWidth: 0; display: flex; flexDirection: column; gap: 22px;">
+          <div style="display: flex; alignItems: center; gap: 10px; fontSize: 14px; color: rgba(255,255,255,0.5);">
+            <a href="{{ homeHref }}" onClick="{{ onHome }}" style="color: rgba(255,255,255,0.5);" style-hover="color: #fff;">Главная</a>
+            <span>/</span>
+            <span style="color: #fff;">{{ crumb }}</span>
+          </div>
+          <p style="margin: 0; fontSize: 13px; fontWeight: 600; letterSpacing: 0.16em; textTransform: uppercase; color: #B5523A;">{{ eyebrow }}</p>
+          <h1 style="margin: 0; fontFamily: 'IBM Plex Serif', serif; fontWeight: 500; fontSize: 54px; lineHeight: 1.1; letterSpacing: -0.025em; color: #fff;">{{ h1 }}</h1>
+<sc-if value="{{ hasLead }}" hint-placeholder-val="{{ false }}"><p style="margin: 0; fontFamily: 'IBM Plex Serif', serif; fontSize: 30px; fontWeight: 500; lineHeight: 1.25; letterSpacing: -0.015em; color: #E3A93B;">{{ lead }}</p></sc-if>
+          <p style="margin: 0; maxWidth: 760px; fontSize: 20px; lineHeight: 1.65; whiteSpace: pre-line; color: rgba(255,255,255,0.72);">{{ sub }}</p>
+          <div style="display: flex; alignItems: center; gap: 16px; flexWrap: wrap;">
+            <sc-for list="{{ primaryCtas }}" as="cta" hint-placeholder-count="1">
+              <a href="#final" style="display: flex; alignItems: center; gap: 14px; padding: 14px 14px 14px 26px; borderRadius: 4px; background: #E3A93B; color: #2B2F36; fontSize: 18px; fontWeight: 600; boxShadow: 0 6px 18px rgba(0,0,0,0.3); transition: box-shadow 180ms ease, transform 180ms ease;" style-hover="color: #2B2F36; boxShadow: 0 6px 18px rgba(0,0,0,0.3); transform: translateY(-2px);">{{ cta.label }}
+                <span class="ico3d" style="--s: 46px; --ic: #E3A93B; --glow: rgba(227,169,59,0.6);">
+                  <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#E3A93B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                </span>
+              </a>
+            </sc-for>
+            <sc-for list="{{ secondaryCtas }}" as="cta" hint-placeholder-count="1">
+              <a href="#final" style="display: flex; alignItems: center; gap: 8px; padding: 13px 20px; borderRadius: 4px; fontSize: 17px; color: #fff; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.16); transition: background 160ms ease;" style-hover="color: #fff; background: rgba(255,255,255,0.14);">{{ cta.label }}
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+              </a>
+            </sc-for>
+          </div>
+          <p style="margin: 0; fontSize: 14px; color: rgba(255,255,255,0.45);">{{ ctaNote }}</p>
+        </div>
+        <div style="minWidth: 0; display: grid; gridTemplateColumns: minmax(0, 1fr); gap: 12px;">
+          <div style="minWidth: 0; boxSizing: border-box; overflow: hidden; padding: 10px; borderRadius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); boxShadow: 0 1px 2px rgba(0,0,0,0.25), 0 10px 28px -10px rgba(0,0,0,0.4);">
+            <div style="minWidth: 0; height: 300px; overflow: hidden; borderRadius: 4px;">
+              <div style="position: relative; minWidth: 0; width: 100%; height: 100%;"><image-slot id="{{ heroSlotId }}" fallback-src="{{ heroSlotSrc }}" shape="rounded" radius="4" placeholder="Фото установки"></image-slot><img class="mtu-wm" src="{{ srcMark }}" alt="" /></div>
+            </div>
+          </div>
+          <sc-if value="{{ hasStats }}" hint-placeholder-val="{{ false }}">
+            <sc-for list="{{ stats }}" as="stat" hint-placeholder-count="2">
+              <div style="display: flex; flexDirection: column; gap: 6px; padding: 22px 24px; borderRadius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); boxShadow: 0 1px 2px rgba(0,0,0,0.25), 0 10px 28px -10px rgba(0,0,0,0.4);">
+                <span style="fontSize: 12px; letterSpacing: 0.12em; textTransform: uppercase; color: rgba(255,255,255,0.5);">{{ stat.label }}</span>
+                <span style="fontFamily: 'IBM Plex Sans', sans-serif; fontSize: 26px; fontWeight: 500; color: #fff;">{{ stat.value }}</span>
+              </div>
+            </sc-for>
+          </sc-if>
+        </div>
+      </div>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ heroPhoto }}" hint-placeholder-val="{{ false }}">
+    <section style="position: relative; overflow: hidden; background: transparent; borderBottom: 1px solid rgba(255,255,255,0.07);">
+      <div style="position: absolute; top: -20%; left: 8%; width: 520px; height: 520px; borderRadius: 9999px; background: rgba(181,82,58,0.24); filter: blur(140px); mixBlendMode: screen; pointerEvents: none;"></div>
+      <div style="position: relative; zIndex: 10; maxWidth: 1180px; margin: 0 auto; padding: 132px 24px 68px; display: grid; gridTemplateColumns: 1.1fr 1fr; gap: 52px; alignItems: center;">
+        <div style="minWidth: 0; display: flex; flexDirection: column; gap: 22px;">
+          <div style="display: flex; alignItems: center; gap: 10px; fontSize: 14px; color: rgba(255,255,255,0.45);">
+            <a href="{{ homeHref }}" onClick="{{ onHome }}" style="color: rgba(255,255,255,0.45);" style-hover="color: #fff;">Главная</a>
+            <span>/</span>
+            <span style="color: rgba(255,255,255,0.7);">{{ crumb }}</span>
+          </div>
+          <p style="margin: 0; fontSize: 13px; fontWeight: 500; letterSpacing: 0.16em; textTransform: uppercase; color: #E3A93B;">{{ eyebrow }}</p>
+          <h1 style="margin: 0; fontFamily: 'IBM Plex Serif', serif; fontWeight: 500; fontSize: 50px; lineHeight: 1.12; letterSpacing: -0.025em; color: #fff;">{{ h1 }}</h1>
+<sc-if value="{{ hasLead }}" hint-placeholder-val="{{ false }}"><p style="margin: 0; fontFamily: 'IBM Plex Serif', serif; fontSize: 30px; fontWeight: 500; lineHeight: 1.25; letterSpacing: -0.015em; color: #E3A93B;">{{ lead }}</p></sc-if>
+          <p style="margin: 0; fontSize: 19px; lineHeight: 1.65; whiteSpace: pre-line; color: rgba(255,255,255,0.7);">{{ sub }}</p>
+          <div style="display: flex; alignItems: center; gap: 16px; flexWrap: wrap;">
+            <sc-for list="{{ primaryCtas }}" as="cta" hint-placeholder-count="1">
+              <a href="#final" style="display: flex; alignItems: center; gap: 14px; padding: 14px 14px 14px 26px; borderRadius: 4px; background: #E3A93B; color: #2B2F36; fontSize: 18px; fontWeight: 600; boxShadow: 0 6px 18px rgba(0,0,0,0.3); transition: box-shadow 180ms ease, transform 180ms ease;" style-hover="color: #2B2F36; boxShadow: 0 6px 18px rgba(0,0,0,0.3); transform: translateY(-2px);">{{ cta.label }}
+                <span class="ico3d" style="--s: 48px; --ic: #E3A93B; --glow: rgba(227,169,59,0.6);">
+                  <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                </span>
+              </a>
+            </sc-for>
+            <sc-for list="{{ secondaryCtas }}" as="cta" hint-placeholder-count="1">
+              <a href="#final" style="display: flex; alignItems: center; gap: 8px; padding: 13px 20px; borderRadius: 4px; fontSize: 17px; color: rgba(255,255,255,0.75); background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.14); transition: background 160ms ease;" style-hover="color: #fff; background: rgba(255,255,255,0.12);">{{ cta.label }}
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+              </a>
+            </sc-for>
+          </div>
+          <p style="margin: 0; fontSize: 14px; color: rgba(255,255,255,0.45);">{{ ctaNote }}</p>
+        </div>
+        <div style="minWidth: 0; display: flex; flexDirection: column; gap: 14px;">
+          <div style="minWidth: 0; padding: 10px; borderRadius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); boxShadow: 0 1px 2px rgba(0,0,0,0.25), 0 10px 28px -10px rgba(0,0,0,0.4);">
+            <div style="position: relative; minWidth: 0; width: 100%; height: 100%;"><image-slot id="hero-photo-solution" fallback-src="{{ heroSlotSrc }}" shape="rounded" radius="6" style="width: 100%; height: 320px;" placeholder="Фото объекта на первый экран"></image-slot><img class="mtu-wm" src="{{ srcMark }}" alt="" /></div>
+          </div>
+          <sc-if value="{{ hasStats }}" hint-placeholder-val="{{ false }}">
+            <div style="display: flex; gap: 12px; flexWrap: wrap;">
+              <sc-for list="{{ stats }}" as="stat" hint-placeholder-count="2">
+                <div style="display: flex; flexDirection: column; gap: 4px; padding: 16px 20px; borderRadius: 8px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); boxShadow: 0 1px 2px rgba(0,0,0,0.25), 0 10px 28px -10px rgba(0,0,0,0.4);">
+                  <span style="fontSize: 11px; letterSpacing: 0.12em; textTransform: uppercase; color: rgba(255,255,255,0.5);">{{ stat.label }}</span>
+                  <span style="fontFamily: 'IBM Plex Sans', sans-serif; fontSize: 22px; fontWeight: 500; color: #fff;">{{ stat.value }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+        </div>
+      </div>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ heroSteel }}" hint-placeholder-val="{{ false }}">
+    <section style="position: relative; overflow: hidden; background: transparent; color: #fff; borderBottom: 1px solid rgba(255,255,255,0.14);">
+      <div style="position: absolute; top: -35%; right: 10%; width: 560px; height: 560px; borderRadius: 9999px; background: rgba(62,90,122,0.32); filter: blur(140px); mixBlendMode: screen; pointerEvents: none;"></div>
+      <div style="position: relative; zIndex: 10; maxWidth: 1180px; margin: 0 auto; padding: 138px 24px 0; display: flex; flexDirection: column; gap: 24px;">
+        <div style="display: flex; alignItems: center; gap: 10px; fontSize: 14px; color: rgba(255,255,255,0.6);">
+          <a href="{{ homeHref }}" onClick="{{ onHome }}" style="color: rgba(255,255,255,0.6);" style-hover="color: #fff;">Главная</a>
+          <span>/</span>
+          <span style="color: #fff;">{{ crumb }}</span>
+        </div>
+        <p style="margin: 0; fontSize: 13px; fontWeight: 600; letterSpacing: 0.18em; textTransform: uppercase; color: #E3A93B;">{{ eyebrow }}</p>
+        <h1 style="margin: 0; maxWidth: 1000px; fontFamily: 'IBM Plex Serif', serif; fontWeight: 500; fontSize: 60px; lineHeight: 1.05; letterSpacing: -0.03em; color: #fff;">{{ h1 }}</h1>
+<sc-if value="{{ hasLead }}" hint-placeholder-val="{{ false }}"><p style="margin: 0; fontFamily: 'IBM Plex Serif', serif; fontSize: 30px; fontWeight: 500; lineHeight: 1.25; letterSpacing: -0.015em; color: #E3A93B;">{{ lead }}</p></sc-if>
+        <p style="margin: 0; maxWidth: 820px; fontSize: 20px; lineHeight: 1.65; whiteSpace: pre-line; color: rgba(255,255,255,0.82);">{{ sub }}</p>
+        <div style="display: flex; alignItems: center; gap: 16px; flexWrap: wrap;">
+          <sc-for list="{{ primaryCtas }}" as="cta" hint-placeholder-count="1">
+            <a href="#final" style="display: flex; alignItems: center; gap: 14px; padding: 12px 12px 12px 22px; borderRadius: 4px; background: #E3A93B; color: #2B2F36; fontSize: 17px; fontWeight: 600; transition: background 160ms ease;" style-hover="color: #2B2F36; background: #CE9530;">{{ cta.label }}
+              <span class="ico3d" style="--s: 46px; --ic: #E3A93B; --glow: rgba(227,169,59,0.6);">
+                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#E3A93B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+              </span>
+            </a>
+          </sc-for>
+          <sc-for list="{{ secondaryCtas }}" as="cta" hint-placeholder-count="1">
+            <a href="#final" style="display: flex; alignItems: center; gap: 8px; padding: 13px 20px; borderRadius: 4px; fontSize: 17px; color: #fff; border: 1px solid rgba(255,255,255,0.4); transition: background 160ms ease;" style-hover="color: #fff; background: rgba(255,255,255,0.12);">{{ cta.label }}
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </sc-for>
+        </div>
+        <p style="margin: 0; fontSize: 14px; color: rgba(255,255,255,0.6);">{{ ctaNote }}</p>
+        <sc-if value="{{ hasStats }}" hint-placeholder-val="{{ false }}">
+          <div style="display: grid; gridTemplateColumns: repeat(2, minmax(0, 320px)); gap: 0; marginTop: 20px; borderTop: 1px solid rgba(255,255,255,0.25);">
+            <sc-for list="{{ stats }}" as="stat" hint-placeholder-count="2">
+              <div style="display: flex; flexDirection: column; gap: 6px; padding: 22px 0;">
+                <span style="fontSize: 12px; letterSpacing: 0.12em; textTransform: uppercase; color: rgba(255,255,255,0.6);">{{ stat.label }}</span>
+                <sc-if value="{{ stat.isShort }}" hint-placeholder-val="{{ true }}">
+                  <span style="fontFamily: 'IBM Plex Sans', sans-serif; fontSize: 30px; fontWeight: 500; color: #E3A93B;">{{ stat.value }}</span>
+                </sc-if>
+                <sc-if value="{{ stat.isLong }}" hint-placeholder-val="{{ false }}">
+                  <span style="fontFamily: 'IBM Plex Sans', sans-serif; fontSize: 18px; fontWeight: 500; lineHeight: 1.35; color: #E3A93B;">{{ stat.value }}</span>
+                </sc-if>
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
+        <div style="height: 24px;"></div>
+      </div>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ heroTerra }}" hint-placeholder-val="{{ false }}">
+    <section style="position: relative; width: 100%; minHeight: 100vh; overflow: hidden; background: transparent; borderBottom: 1px solid rgba(255,255,255,0.07);">
+      <div style="position: absolute; top: -20%; left: 20%; width: 600px; height: 600px; borderRadius: 9999px; background: rgba(62,90,122,0.32); filter: blur(130px); mixBlendMode: screen; pointerEvents: none;"></div>
+      <div style="position: absolute; bottom: -10%; right: 20%; width: 500px; height: 500px; borderRadius: 9999px; background: rgba(43,47,54,0.55); filter: blur(130px); mixBlendMode: screen; pointerEvents: none;"></div>
+      <div style="position: absolute; top: 38%; left: -9%; width: 420px; height: 420px; borderRadius: 9999px; background: rgba(181,82,58,0.3); filter: blur(140px); mixBlendMode: screen; pointerEvents: none;"></div>
+      <div style="position: absolute; top: -6%; left: 62%; width: 360px; height: 360px; borderRadius: 9999px; background: rgba(227,169,59,0.22); filter: blur(140px); mixBlendMode: screen; pointerEvents: none;"></div>
+
+      <div style="position: relative; zIndex: 10; maxWidth: 1320px; margin: 0 auto; padding: 148px 40px 96px; display: flex; flexDirection: column; gap: 40px;">
+        <div style="display: flex; alignItems: center; gap: 10px; fontSize: 14px; color: rgba(255,255,255,0.45); opacity: 0; animation: heroFadeUp 0.6s ease-out forwards;">
+          <a href="{{ homeHref }}" onClick="{{ onHome }}" style="color: rgba(255,255,255,0.45);" style-hover="color: #fff;">Главная</a>
+          <span>/</span>
+          <span style="color: rgba(255,255,255,0.7);">{{ crumb }}</span>
+        </div>
+        <p style="margin: 0; fontSize: 13px; fontWeight: 500; letterSpacing: 0.16em; textTransform: uppercase; color: #B5523A; opacity: 0; animation: heroFadeUp 0.6s ease-out 0.1s forwards;">{{ eyebrow }}</p>
+
+        <div data-hero-grid="" style="display: grid; gridTemplateColumns: minmax(0, 1fr) minmax(0, 1.22fr); gap: 40px; alignItems: stretch;">
+          <div style="minWidth: 0; display: flex; flexDirection: column; justifyContent: space-between; gap: 28px;">
+            <h1 style="margin: 0; fontFamily: 'IBM Plex Serif', serif; fontWeight: 500; fontSize: clamp(38px, 3.5vw, 56px); lineHeight: 1.16; paddingBottom: 0.1em; letterSpacing: -0.03em; background: linear-gradient(to bottom, #ffffff 0%, #ffffff 55%, #8FA6BF 100%); WebkitBackgroundClip: text; backgroundClip: text; color: transparent; opacity: 0; animation: heroScaleIn 0.6s ease-out 0.2s forwards;">{{ h1 }}</h1>
+<sc-if value="{{ hasLead }}" hint-placeholder-val="{{ false }}"><p style="margin: 0; fontFamily: 'IBM Plex Serif', serif; fontSize: 30px; fontWeight: 500; lineHeight: 1.25; letterSpacing: -0.015em; color: #E3A93B;">{{ lead }}</p></sc-if>
+            <p style="margin: 0; maxWidth: 600px; fontSize: 18px; lineHeight: 1.65; whiteSpace: pre-line; color: #fff; opacity: 0; animation: heroFadeIn70 0.6s ease-out 0.4s forwards;">{{ sub }}</p>
+          </div>
+          <div ref="{{ unitRef }}" data-hero-media="" style="minWidth: 0; position: relative; minHeight: 480px; opacity: 0; animation: heroFadeUp 0.7s ease-out 0.35s forwards;">
+            <img data-hero-img="" src="{{ srcHeroOpen }}" alt="Модульная тепловая установка МТУ, открытая" style="position: absolute; top: -18%; bottom: auto; left: auto; right: -56px; width: 100%; height: 136%; objectFit: contain; objectPosition: right center; display: block; opacity: {{ openOpacity }};">
+            <img data-hero-img="" src="{{ srcHeroClosed }}" alt="Модульная тепловая установка МТУ, закрытая" style="position: absolute; top: -18%; bottom: auto; left: auto; right: -56px; width: 100%; height: 136%; objectFit: contain; objectPosition: right center; display: block; transform: translateX(2px); opacity: {{ closedOpacity }};">
+            <img src="{{ srcMark }}" alt="" style="position: absolute; right: 16px; bottom: 8px; width: 74px; opacity: 0.36; pointerEvents: none; filter: drop-shadow(0 1px 3px rgba(0,0,0,0.5));">
+          </div>
+        </div>
+
+        <div style="display: flex; alignItems: center; gap: 32px; flexWrap: wrap; opacity: 0; animation: heroFadeUp 0.5s ease-out 0.6s forwards;">
+          <div style="display: flex; flexDirection: column; alignItems: flex-start; gap: 12px;">
+            <div style="display: flex; flexDirection: row; alignItems: center; gap: 20px; flexWrap: wrap;">
+              <sc-for list="{{ primaryCtas }}" as="cta" hint-placeholder-count="1">
+                <a href="#final" style="display: flex; alignItems: center; gap: 16px; padding: 12px 12px 12px 24px; borderRadius: 4px; background: #fff; color: #0a0400; fontSize: 18px; fontWeight: 500; transition: box-shadow 180ms ease;" style-hover="color: #0a0400; boxShadow: 0 0 20px rgba(255,255,255,0.3);">{{ cta.label }}
+                  <span class="ico3d" style="--s: 46px; --ic: #E3A93B; --glow: rgba(227,169,59,0.6);">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2B2F36" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                  </span>
+                </a>
+              </sc-for>
+              <sc-for list="{{ secondaryCtas }}" as="cta" hint-placeholder-count="1">
+                <a href="#final" style="display: flex; alignItems: center; gap: 8px; padding: 10px 18px; borderRadius: 4px; fontSize: 18px; color: rgba(255,255,255,0.75); background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); transition: color 180ms ease, background 180ms ease;" style-hover="color: #fff; background: rgba(255,255,255,0.12);">{{ cta.label }}
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                </a>
+              </sc-for>
+            </div>
+            <p style="margin: 0; fontSize: 14px; color: rgba(255,255,255,0.5);">{{ ctaNote }}</p>
+          </div>
+          <sc-if value="{{ hasStats }}" hint-placeholder-val="{{ false }}">
+            <div style="display: flex; alignItems: center; gap: 24px; flexWrap: wrap; padding: 18px 24px; borderRadius: 8px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); boxShadow: 0 1px 2px rgba(0,0,0,0.25), 0 10px 28px -10px rgba(0,0,0,0.4);">
+              <sc-for list="{{ stats }}" as="stat" hint-placeholder-count="2">
+                <div style="display: flex; flexDirection: column; alignItems: flex-start; gap: 4px;">
+                  <span style="fontSize: 12px; letterSpacing: 0.12em; textTransform: uppercase; color: rgba(255,255,255,0.5);">{{ stat.label }}</span>
+                  <span style="fontFamily: 'IBM Plex Sans', sans-serif; fontSize: 26px; fontWeight: 500; color: #fff;">{{ stat.value }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+        </div>
+      </div>
+    </section>
+
+    <section style="position: relative; width: 100%; lineHeight: 0; maskImage: linear-gradient(to bottom, transparent 0, #000 34px, #000 calc(100% - 34px), transparent 100%), linear-gradient(to right, transparent 0, #000 34px, #000 calc(100% - 34px), transparent 100%); WebkitMaskImage: linear-gradient(to bottom, transparent 0, #000 34px, #000 calc(100% - 34px), transparent 100%), linear-gradient(to right, transparent 0, #000 34px, #000 calc(100% - 34px), transparent 100%); maskComposite: intersect; WebkitMaskComposite: source-in;">
+      <video-slot id="mtu-rent-loop2" src="uploads/IMG_1442-722dff8a.mp4" watermark="assets/mtu-mark.webp" bare="" height="620px" radius="0" placeholder="Перетащите сюда своё видео"></video-slot>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ heroDefault }}" hint-placeholder-val="{{ true }}">
+  <section style="position: relative; overflow: hidden; borderBottom: 1px solid rgba(255,255,255,0.07);">
+    <sc-if value="{{ hasHeroBg }}" hint-placeholder-val="{{ false }}">
+      <div style="position: absolute; inset: 0; backgroundImage: {{ heroBgImage }}; backgroundSize: auto, cover; backgroundPosition: center, 72% 50%; opacity: 0.55; maskImage: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, #000 42%, rgba(0,0,0,0.12) 100%); WebkitMaskImage: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, #000 42%, rgba(0,0,0,0.12) 100%); pointerEvents: none;"></div>
+    </sc-if>
+    <div style="position: absolute; top: -30%; left: 25%; width: 620px; height: 620px; borderRadius: 9999px; background: rgba(62,90,122,0.4); filter: blur(120px); mixBlendMode: screen; pointerEvents: none;"></div>
+    <div style="position: absolute; bottom: -35%; right: 12%; width: 460px; height: 460px; borderRadius: 9999px; background: rgba(227,169,59,0.14); filter: blur(120px); mixBlendMode: screen; pointerEvents: none;"></div>
+    <div style="position: relative; zIndex: 10; maxWidth: 1180px; margin: 0 auto; padding: 140px 24px 76px; display: flex; flexDirection: column; gap: 28px;">
+      <div style="display: flex; alignItems: center; gap: 10px; fontSize: 14px; color: rgba(255,255,255,0.45);">
+        <a href="{{ homeHref }}" onClick="{{ onHome }}" style="color: rgba(255,255,255,0.45);" style-hover="color: #fff;">Главная</a>
+        <span>/</span>
+        <span style="color: rgba(255,255,255,0.7);">{{ crumb }}</span>
+      </div>
+      <p style="margin: 0; fontSize: 13px; fontWeight: 500; letterSpacing: 0.16em; textTransform: uppercase; color: #B5523A;">{{ eyebrow }}</p>
+      <h1 style="margin: 0; maxWidth: 980px; fontFamily: 'IBM Plex Serif', serif; fontWeight: 500; fontSize: 56px; lineHeight: 1.1; letterSpacing: -0.025em; background: linear-gradient(to bottom, #ffffff 0%, #ffffff 55%, #8FA6BF 100%); WebkitBackgroundClip: text; backgroundClip: text; color: transparent;">{{ h1 }}</h1>
+<sc-if value="{{ hasLead }}" hint-placeholder-val="{{ false }}"><p style="margin: 0; fontFamily: 'IBM Plex Serif', serif; fontSize: 30px; fontWeight: 500; lineHeight: 1.25; letterSpacing: -0.015em; color: #E3A93B;">{{ lead }}</p></sc-if>
+      <p style="margin: 0; maxWidth: 800px; fontSize: 20px; lineHeight: 1.65; whiteSpace: pre-line; color: rgba(255,255,255,0.7);">{{ sub }}</p>
+      <div style="display: flex; alignItems: center; gap: 20px; flexWrap: wrap;">
+        <sc-for list="{{ primaryCtas }}" as="cta" hint-placeholder-count="1">
+          <a href="#final" style="display: flex; alignItems: center; gap: 14px; padding: 12px 12px 12px 22px; borderRadius: 4px; background: #fff; color: #2B2F36; fontSize: 17px; fontWeight: 500; transition: transform 180ms ease, box-shadow 180ms ease;" style-hover="color: #2B2F36; boxShadow: 0 0 20px rgba(255,255,255,0.3);">{{ cta.label }}
+            <span class="ico3d" style="--s: 46px; --ic: #E3A93B; --glow: rgba(227,169,59,0.6);">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#2B2F36" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </span>
+          </a>
+        </sc-for>
+        <sc-for list="{{ secondaryCtas }}" as="cta" hint-placeholder-count="1">
+          <a href="#final" style="display: flex; alignItems: center; gap: 8px; padding: 12px 20px; borderRadius: 4px; fontSize: 17px; color: rgba(255,255,255,0.75); background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.14); backdropFilter: blur(14px); transition: background 160ms ease;" style-hover="color: #fff; background: rgba(255,255,255,0.12);">{{ cta.label }}
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+          </a>
+        </sc-for>
+      </div>
+      <p style="margin: 0; fontSize: 14px; color: rgba(255,255,255,0.45);">{{ ctaNote }}</p>
+      <sc-if value="{{ hasStats }}" hint-placeholder-val="{{ false }}">
+        <div style="display: flex; alignItems: center; gap: 28px; flexWrap: wrap; padding: 20px 28px; borderRadius: 8px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); boxShadow: 0 1px 2px rgba(0,0,0,0.25), 0 10px 28px -10px rgba(0,0,0,0.4); width: fit-content;">
+          <sc-for list="{{ stats }}" as="stat" hint-placeholder-count="2">
+            <div style="display: flex; flexDirection: column; gap: 4px;">
+              <span style="fontSize: 12px; letterSpacing: 0.12em; textTransform: uppercase; color: rgba(255,255,255,0.5);">{{ stat.label }}</span>
+              <sc-if value="{{ stat.isShort }}" hint-placeholder-val="{{ true }}">
+                <span style="fontFamily: 'IBM Plex Sans', sans-serif; fontSize: 25px; fontWeight: 500; color: #fff;">{{ stat.value }}</span>
+              </sc-if>
+              <sc-if value="{{ stat.isLong }}" hint-placeholder-val="{{ false }}">
+                <span style="fontFamily: 'IBM Plex Sans', sans-serif; fontSize: 17px; fontWeight: 500; lineHeight: 1.35; color: #fff;">{{ stat.value }}</span>
+              </sc-if>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+    </div>
+  </section>
+  </sc-if>
+
+  <sc-if value="{{ isCatalog }}" hint-placeholder-val="{{ false }}">
+    <section id="catalog-models" style="position: relative; maxWidth: 1180px; margin: 0 auto; padding: 90px 24px 0;">
+      <h2 style="margin: 0 0 16px; fontSize: 38px; fontWeight: 600; letterSpacing: -0.025em; lineHeight: 1.16;">Модельный ряд <span style="color: #E3A93B;">модульных установок</span></h2>
+      <p style="margin: 0 0 36px; maxWidth: 780px; fontSize: 19px; lineHeight: 1.7; color: rgba(255,255,255,0.7);">Нажмите на карточку — откроется окно с характеристиками и базовой комплектацией установки.</p>
+
+      <div style="display: grid; gridTemplateColumns: repeat(3, minmax(0, 1fr)); gap: 24px; alignItems: start;">
+        <sc-for list="{{ catalogCards }}" as="card" hint-placeholder-count="6">
+          <div style="minWidth: 0; display: flex; flexDirection: column; gap: 20px; padding: 28px; borderRadius: 8px; background: rgba(255,255,255,0.05); border: 1px solid {{ card.borderColor }}; transition: border-color 160ms ease, background 160ms ease;" style-hover="background: rgba(255,255,255,0.08);">
+            <div onClick="{{ card.toggle }}" style="position: relative; height: 300px; display: flex; alignItems: center; justifyContent: center; perspective: 1700px; cursor: pointer;">
+              <div style="position: absolute; bottom: 14px; width: {{ card.shW }}; height: 30px; borderRadius: 9999px; background: radial-gradient(ellipse at center, rgba(0,0,0,0.6), rgba(0,0,0,0) 70%); filter: blur(5px); pointerEvents: none;"></div>
+              <div style="position: relative; width: {{ card.bwPx }}; height: {{ card.bhPx }}; marginTop: 34px; transformStyle: preserve-3d; animation: spinUnit 26s linear infinite;">
+                <sc-for list="{{ card.faces }}" as="fc" hint-placeholder-count="6">
+                  <div style="position: absolute; left: 50%; top: 50%; width: {{ fc.w }}; height: {{ fc.h }}; transform: {{ fc.tf }}; backfaceVisibility: hidden; background: {{ fc.bg }}; boxSizing: border-box;">
+                    <sc-for list="{{ fc.parts }}" as="p" hint-placeholder-count="4">
+                      <div style="position: absolute; left: {{ p.x }}; top: {{ p.y }}; width: {{ p.w }}; height: {{ p.h }}; background: {{ p.bg }}; border: {{ p.bd }}; borderRadius: {{ p.r }}; boxShadow: {{ p.sh }}; boxSizing: border-box;"></div>
+                    </sc-for>
+                  </div>
+                </sc-for>
+                <sc-for list="{{ card.tubes }}" as="tb" hint-placeholder-count="20">
+                  <div style="position: absolute; left: 50%; top: 50%; width: {{ tb.w }}; height: {{ tb.h }}; transform: {{ tb.tf }}; backfaceVisibility: {{ tb.bfv }}; background: {{ tb.bg }}; borderRadius: {{ tb.r }};"></div>
+                </sc-for>
+              </div>
+            </div>
+
+            <h3 style="margin: 0; fontSize: 28px; fontWeight: 600; letterSpacing: -0.02em; color: #fff;">{{ card.name }}</h3>
+            <p style="margin: 0; fontSize: 16px; lineHeight: 1.6; color: rgba(255,255,255,0.7);">{{ card.desc }}</p>
+
+            <div style="display: grid; gridTemplateColumns: 1fr 1fr; gap: 16px; paddingTop: 18px; borderTop: 1px solid rgba(255,255,255,0.12);">
+              <div style="display: flex; flexDirection: column; gap: 4px;">
+                <span style="fontSize: 11px; letterSpacing: 0.12em; textTransform: uppercase; color: rgba(255,255,255,0.45);">мощность</span>
+                <span style="fontSize: 17px; color: #fff;">{{ card.power }}</span>
+              </div>
+              <div style="display: flex; flexDirection: column; gap: 4px;">
+                <span style="fontSize: 11px; letterSpacing: 0.12em; textTransform: uppercase; color: rgba(255,255,255,0.45);">площадь</span>
+                <span style="fontSize: 17px; color: #fff;">{{ card.area }}</span>
+              </div>
+            </div>
+
+            <span style="fontSize: 13px; color: rgba(255,255,255,0.55);">{{ card.dimsFull }}</span>
+
+            <div style="display: flex; alignItems: center; justifyContent: flex-start; gap: 16px; marginTop: auto;">
+              <button type="button" onClick="{{ card.toggle }}" style="display: flex; alignItems: center; gap: 10px; padding: 10px 14px; borderRadius: 4px; cursor: pointer; fontFamily: inherit; fontSize: 15px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.14); color: #fff; transition: background 160ms ease;" style-hover="background: rgba(255,255,255,0.12);">
+                Подробнее
+                <span style="display: flex; alignItems: center; justifyContent: center; width: 26px; height: 26px; borderRadius: 4px; background: #B5523A; fontSize: 18px; lineHeight: 1; color: #fff;">+</span>
+              </button>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+
+      <sc-if value="{{ modalOpen }}" hint-placeholder-val="{{ false }}">
+        <div onClick="{{ closeModal }}" style="position: fixed; inset: 0; zIndex: 2500; display: flex; alignItems: center; justifyContent: center; padding: 24px; boxSizing: border-box; background: rgba(14,16,19,0.82); backdropFilter: blur(8px);">
+          <div onClick="{{ stopClick }}" style="position: relative; width: 100%; maxWidth: 980px; maxHeight: calc(100vh - 48px); overflowY: auto; boxSizing: border-box; padding: 40px; borderRadius: 10px; background: #2B2F36; border: 1px solid rgba(255,255,255,0.16); boxShadow: 0 30px 80px rgba(0,0,0,0.6); display: flex; flexDirection: column; gap: 28px;">
+            <button type="button" onClick="{{ closeModal }}" aria-label="Закрыть" style="position: absolute; top: 14px; right: 14px; width: 44px; height: 44px; borderRadius: 6px; background: transparent; border: 0; color: #fff; fontSize: 28px; cursor: pointer;" style-hover="background: rgba(255,255,255,0.1);">×</button>
+            <div style="display: flex; flexDirection: column; gap: 10px; paddingRight: 48px;">
+              <span style="fontSize: 12px; letterSpacing: 0.14em; textTransform: uppercase; color: #E3A93B;">Модельный ряд МТУ</span>
+              <h3 style="margin: 0; fontSize: 36px; fontWeight: 600; letterSpacing: -0.02em; color: #fff;">{{ modalName }}</h3>
+              <p style="margin: 0; maxWidth: 780px; fontSize: 17px; lineHeight: 1.65; color: rgba(255,255,255,0.75);">{{ modalDesc }}</p>
+            </div>
+            <div style="display: flex; flexDirection: column; gap: 14px;">
+              <h4 style="margin: 0; fontSize: 20px; fontWeight: 600; color: #fff;">Технические характеристики</h4>
+              <span style="fontSize: 14px; color: rgba(255,255,255,0.55);">{{ modalNote }}</span>
+              <div style="display: grid; gridTemplateColumns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px;">
+                <sc-for list="{{ modalSpecs }}" as="sp" hint-placeholder-count="10">
+                  <div style="minWidth: 0; display: flex; flexDirection: column; gap: 4px; padding: 14px 18px; borderRadius: 8px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);">
+                    <span style="fontSize: 12px; letterSpacing: 0.1em; textTransform: uppercase; color: rgba(255,255,255,0.5);">{{ sp.k }}</span>
+                    <span style="fontSize: 17px; lineHeight: 1.4; color: #fff;">{{ sp.v }}</span>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+            <div style="display: flex; flexDirection: column; gap: 14px;">
+              <h4 style="margin: 0; fontSize: 20px; fontWeight: 600; color: #fff;">Базовая комплектация</h4>
+              <div style="display: grid; gridTemplateColumns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px;">
+                <sc-for list="{{ baseKit }}" as="item" hint-placeholder-count="6">
+                  <div style="minWidth: 0; display: flex; gap: 12px; alignItems: flex-start; padding: 14px 16px; borderRadius: 8px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); fontSize: 15px; lineHeight: 1.5; color: rgba(255,255,255,0.78);">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="{{ item.tick }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flexShrink: 0; marginTop: 2px;"><path d="m5 12 5 5 9-10"></path></svg>
+                    {{ item.text }}
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+            <div style="display: flex; alignItems: center; gap: 18px; flexWrap: wrap;">
+              <a href="#final" onClick="{{ closeModal }}" style="display: inline-flex; alignItems: center; justifyContent: center; minHeight: 52px; padding: 14px 28px; borderRadius: 4px; background: #E3A93B; color: #2B2F36; fontSize: 18px; fontWeight: 600; textDecoration: none;">Запросить эту модель</a>
+              <a href="#final" onClick="{{ closeModal }}" style="fontSize: 16px; color: rgba(255,255,255,0.7); textDecoration: none;" style-hover="color: #fff;">Получить КП по этой модели</a>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+    </section>
+
+  <section style="position: relative; maxWidth: 1180px; margin: 0 auto; padding: 90px 24px 0;">
+    <h2 style="margin: 0 0 28px; fontSize: 38px; fontWeight: 600; letterSpacing: -0.025em; lineHeight: 1.16;">Объект <span style="color: #E3A93B;">в работе</span></h2>
+    <div style="display: grid; gridTemplateColumns: 1.4fr 1fr 1fr; gap: 20px;">
+      <div style="minWidth: 0; padding: 10px; borderRadius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); boxShadow: 0 1px 2px rgba(0,0,0,0.25), 0 10px 28px -10px rgba(0,0,0,0.4);">
+        <div style="position: relative; minWidth: 0; width: 100%; height: 100%;"><image-slot id="{{ shotA }}" fallback-src="{{ shotASrc }}" shape="rounded" radius="4" style="width: 100%; height: 300px;" placeholder="Фото установки на объекте"></image-slot><img class="mtu-wm" src="{{ srcMark }}" alt="" /></div>
+      </div>
+      <div style="minWidth: 0; padding: 10px; borderRadius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); boxShadow: 0 1px 2px rgba(0,0,0,0.25), 0 10px 28px -10px rgba(0,0,0,0.4);">
+        <div style="position: relative; minWidth: 0; width: 100%; height: 100%;"><image-slot id="{{ shotB }}" fallback-src="{{ shotBSrc }}" shape="rounded" radius="4" style="width: 100%; height: 300px;" placeholder="Фото узлов внутри"></image-slot><img class="mtu-wm" src="{{ srcMark }}" alt="" /></div>
+      </div>
+      <div style="minWidth: 0; padding: 10px; borderRadius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); boxShadow: 0 1px 2px rgba(0,0,0,0.25), 0 10px 28px -10px rgba(0,0,0,0.4);">
+        <div style="position: relative; minWidth: 0; width: 100%; height: 100%;"><image-slot id="{{ shotC }}" fallback-src="{{ shotCSrc }}" shape="rounded" radius="4" style="width: 100%; height: 300px;" placeholder="Фото монтажа"></image-slot><img class="mtu-wm" src="{{ srcMark }}" alt="" /></div>
+      </div>
+    </div>
+  </section>
+  </sc-if>
+
+  <sc-for list="{{ blocks }}" as="block" hint-placeholder-count="4">
+    <section style="position: relative; maxWidth: 1180px; margin: 0 auto; padding: 84px 24px 0; animation: blockIn 0.7s cubic-bezier(0.16,1,0.3,1) both;">
+      <sc-if value="{{ block.h2 }}" hint-placeholder-val="{{ true }}">
+        <h2 style="margin: 0 0 20px; maxWidth: 900px; fontSize: 38px; fontWeight: 600; letterSpacing: -0.025em; lineHeight: 1.16;">{{ block.h2head }}<span style="color: #E3A93B;">{{ block.h2accent }}</span></h2>
+      </sc-if>
+      <sc-for list="{{ block.paragraphs }}" as="para" hint-placeholder-count="1">
+        <p style="margin: 0 0 20px; maxWidth: 840px; fontSize: 19px; lineHeight: 1.7; color: rgba(255,255,255,0.7);"><sc-for list="{{ para.parts }}" as="part" hint-placeholder-count="1"><span style="color: {{ part.color }}; fontWeight: {{ part.weight }};">{{ part.text }}</span></sc-for></p>
+      </sc-for>
+
+      <sc-if value="{{ block.isSteps }}" hint-placeholder-val="{{ false }}">
+        <div style="position: relative; marginTop: 12px;">
+          <div style="display: grid; gridTemplateColumns: minmax(0, 1fr) minmax(0, 1fr); gap: 22px; alignItems: stretch;">
+            <sc-for list="{{ block.phases }}" as="phase" hint-placeholder-count="3">
+              <div style="position: relative; minWidth: 0; gridColumn: {{ phase.span }}; display: flex; borderRadius: 14px; padding: 1px; background: linear-gradient(135deg, {{ phase.edgeA }} 0%, rgba(255,255,255,0.10) 46%, {{ phase.edgeB }} 100%); animation: edgeGlow 7s ease-in-out infinite;">
+                <sc-if value="{{ phase.hasLink }}" hint-placeholder-val="{{ false }}">
+                  <svg width="22" height="46" viewBox="0 0 22 46" style="position: absolute; top: 42px; right: -23px; overflow: visible; pointerEvents: none; zIndex: 2;">
+                    <path d="M 0 10 C 8 2, 14 36, 22 24" fill="none" stroke="{{ phase.accent }}" stroke-width="1.4" stroke-linecap="round" stroke-opacity="0.6" stroke-dasharray="70" style="animation: traceLink 1.3s ease-out {{ phase.linkDelay }} both;"></path>
+                  </svg>
+                </sc-if>
+                <div style="position: relative; minWidth: 0; flex: 1; borderRadius: 13px; overflow: hidden; background: rgba(255,255,255,0.045); backdropFilter: blur(18px); WebkitBackdropFilter: blur(18px); display: flex; flexDirection: column; gap: 18px; padding: 24px 24px 20px;">
+                  <div style="position: absolute; inset: 0; pointerEvents: none; overflow: hidden;">
+                    <svg viewBox="0 0 100 100" preserveAspectRatio="none" style="position: absolute; top: 0; left: 0; width: 100%; height: 132px; overflow: visible;">
+                      <path d="M-6 50 C 18 36, 32 66, 52 52 C 72 38, 84 62, 106 48" fill="none" stroke="{{ phase.accent }}" stroke-opacity="0.07" stroke-width="20" vector-effect="non-scaling-stroke" stroke-linecap="round" style="filter: blur(24px);"></path>
+                      <sc-for list="{{ phase.lines }}" as="line" hint-placeholder-count="22">
+                        <g style="animation: {{ line.anim }};">
+                          <path d="M-6 50 C 18 36, 32 66, 52 52 C 72 38, 84 62, 106 48" transform="translate(0 {{ line.dy }})" fill="none" stroke="{{ line.stroke }}" stroke-opacity="{{ line.op }}" stroke-width="{{ line.w }}" stroke-dasharray="{{ line.dash }}" stroke-linecap="round" vector-effect="non-scaling-stroke" style="animation: {{ line.flow }};"></path>
+                        </g>
+                      </sc-for>
+                    </svg>
+                  </div>
+                  <div style="position: relative; flex: 1; display: flex; flexDirection: column; gap: 18px; minWidth: 0;">
+                    <div style="minWidth: 0;">
+                      <p style="margin: 0; fontSize: 25px; lineHeight: 1.18; fontWeight: 600; letterSpacing: -0.02em; color: #fff; textWrap: pretty;">{{ phase.title }}</p>
+                      <p style="margin: 7px 0 0; fontSize: 14px; color: rgba(255,255,255,0.45);">{{ phase.count }}</p>
+                    </div>
+                    <div style="display: grid; gap: 12px; gridTemplateColumns: {{ phase.stepCols }}; alignItems: stretch;">
+            <sc-for list="{{ phase.steps }}" as="step" hint-placeholder-count="2">
+            <div style="minWidth: 0; padding: 16px 18px 17px; background: rgba(43,47,54,0.94); clipPath: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 0 100%); border: none;">
+              <div style="display: flex; gap: 12px; alignItems: baseline;">
+                <span style="flexShrink: 0; fontSize: 15px; fontWeight: 600; color: {{ phase.ink }};">{{ step.n }}</span>
+                <p style="margin: 0; fontSize: 18px; lineHeight: 1.4; fontWeight: 600; color: rgba(255,255,255,0.95); textWrap: pretty;">{{ step.title }}</p>
+              </div>
+              <sc-if value="{{ step.hasNeed }}" hint-placeholder-val="{{ true }}">
+                <p style="margin: 10px 0 0 27px; fontSize: 15px; lineHeight: 1.55; color: rgba(255,255,255,0.62);">Нужно от вас: {{ step.needLabel }}</p>
+              </sc-if>
+            </div>
+            </sc-for>
+                    </div>
+                    <div style="display: flex; alignItems: center; gap: 9px; marginTop: auto; paddingTop: 16px; borderTop: 1px solid rgba(255,255,255,0.09);">
+                      <span style="position: relative; width: 7px; height: 7px; borderRadius: 50%; background: {{ phase.accent }}; boxShadow: 0 0 0 4px rgba(255,255,255,0.06);"></span>
+                      <span style="fontSize: 13px; letterSpacing: 0.06em; textTransform: uppercase; color: rgba(255,255,255,0.66);">{{ phase.status }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ block.isStepper }}" hint-placeholder-val="{{ false }}">
+        <div style="display: grid; gap: 16px; marginTop: 8px;">
+          <sc-for list="{{ block.stages }}" as="stage" hint-placeholder-count="6">
+            <div style="position: relative; display: grid; gridTemplateColumns: 84px minmax(0, 1fr); alignItems: stretch;">
+              <div style="position: relative;">
+                <div style="position: absolute; left: 27px; top: 0; bottom: -16px; width: 2px; background: linear-gradient(to bottom, {{ stage.accent }}, rgba(255,255,255,0.10));"></div>
+                <div style="position: absolute; left: 56px; top: 27px; width: 26px; height: 1px; background: linear-gradient(to right, {{ stage.accent }}, rgba(255,255,255,0.06));"></div>
+                <div style="position: relative; width: 56px; height: 56px; borderRadius: 50%; display: flex; alignItems: center; justifyContent: center; background: #14171B; border: 1.5px solid {{ stage.accent }}; boxShadow: 0 0 18px -2px {{ stage.accent }}; fontFamily: 'IBM Plex Sans', sans-serif; fontSize: 17px; color: #fff;">{{ stage.n }}</div>
+              </div>
+              <div style="display: grid; gridTemplateColumns: minmax(0, 0.85fr) minmax(0, 1.15fr); gap: 24px; alignItems: center; padding: 22px 24px; borderRadius: 10px; background: rgba(20,23,28,0.82); border: 1px solid rgba(255,255,255,0.08);">
+                <div style="display: flex; gap: 14px; alignItems: flex-start; minWidth: 0;">
+                  <span class="ico3d" style="--s: 48px; --ic: #E3A93B; --glow: rgba(227,169,59,0.55); marginTop: -2px;">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                    <sc-if value="{{ stage.icClipboard }}" hint-placeholder-val="{{ false }}"><path d="M9 4h6v3H9z"></path><path d="M9 5.5H6v14h12v-14h-3"></path><path d="M9 11h6M9 15h4"></path></sc-if>
+                    <sc-if value="{{ stage.icSearch }}" hint-placeholder-val="{{ false }}"><circle cx="11" cy="11" r="6"></circle><path d="m16 16 4 4"></path></sc-if>
+                    <sc-if value="{{ stage.icBulb }}" hint-placeholder-val="{{ false }}"><path d="M9 17h6M10 20h4"></path><path d="M12 3a6 6 0 0 0-3.5 10.9V17h7v-3.1A6 6 0 0 0 12 3z"></path></sc-if>
+                    <sc-if value="{{ stage.icLayers }}" hint-placeholder-val="{{ false }}"><path d="m12 3 8 4.5-8 4.5-8-4.5z"></path><path d="m4 12 8 4.5 8-4.5"></path><path d="m4 16.5 8 4.5 8-4.5"></path></sc-if>
+                    <sc-if value="{{ stage.icTruck }}" hint-placeholder-val="{{ false }}"><path d="M3 7h11v9H3z"></path><path d="M14 10h4l3 3v3h-7z"></path><circle cx="7" cy="18" r="1.6"></circle><circle cx="17" cy="18" r="1.6"></circle></sc-if>
+                    <sc-if value="{{ stage.icCheck }}" hint-placeholder-val="{{ false }}"><circle cx="12" cy="12" r="8.5"></circle><path d="m8 12.5 2.8 2.8L16 9.5"></path></sc-if>
+                  </svg>
+                  </span>
+                  <div style="minWidth: 0;">
+                    <p style="margin: 0; fontSize: 20px; fontWeight: 600; lineHeight: 1.2; color: #fff;">{{ stage.title }}</p>
+                    <p style="margin: 7px 0 0; fontSize: 15px; lineHeight: 1.55; color: rgba(255,255,255,0.6); textWrap: pretty;">{{ stage.desc }}</p>
+                  </div>
+                </div>
+                <div style="minWidth: 0; padding: 16px 18px; borderRadius: 8px; background: rgba(255,255,255,0.035); border: 1px solid rgba(255,255,255,0.07);" data-stage-preview="{{ stage.kind }}">
+                  <sc-if value="{{ stage.isNote }}" hint-placeholder-val="{{ false }}">
+                    <div style="display: grid; gridTemplateColumns: 1fr 1fr; gap: 14px 20px;">
+                      <sc-for list="{{ stage.noteRows }}" as="row" hint-placeholder-count="4">
+                        <div style="minWidth: 0;">
+                          <p style="margin: 0; fontSize: 12px; letterSpacing: 0.08em; textTransform: uppercase; color: {{ stage.accent }};">{{ row.h }}</p>
+                          <p style="margin: 5px 0 0; fontSize: 14px; lineHeight: 1.45; color: rgba(255,255,255,0.78);">{{ row.t }}</p>
+                        </div>
+                      </sc-for>
+                    </div>
+                  </sc-if>
+                  <sc-if value="{{ stage.isMap }}" hint-placeholder-val="{{ false }}">
+                    <div style="display: grid; gridTemplateColumns: 1fr auto 1fr; gap: 14px; alignItems: center;">
+                      <div style="display: grid; gap: 6px; minWidth: 0;">
+                        <sc-for list="{{ stage.leftNodes }}" as="node" hint-placeholder-count="4">
+                          <span style="padding: 6px 10px; borderRadius: 4px; fontSize: 12.5px; lineHeight: 1.3; color: rgba(255,255,255,0.8); background: rgba(62,90,122,0.28); border: 1px solid rgba(255,255,255,0.08);">{{ node.t }}</span>
+                        </sc-for>
+                      </div>
+                      <div style="display: flex; alignItems: center; justifyContent: center; width: 86px; height: 86px; borderRadius: 50%; border: 1px solid {{ stage.accent }}; fontSize: 13px; color: #fff;">{{ stage.center }}</div>
+                      <div style="display: grid; gap: 6px; minWidth: 0;">
+                        <sc-for list="{{ stage.rightNodes }}" as="node" hint-placeholder-count="4">
+                          <span style="padding: 6px 10px; borderRadius: 4px; fontSize: 12.5px; lineHeight: 1.3; color: rgba(255,255,255,0.88); background: rgba(227,169,59,0.16); border: 1px solid rgba(227,169,59,0.3);">{{ node.t }}</span>
+                        </sc-for>
+                      </div>
+                    </div>
+                  </sc-if>
+                  <sc-if value="{{ stage.isPath }}" hint-placeholder-val="{{ false }}">
+                    <div style="display: grid; gap: 14px;">
+                      <p style="margin: 0; fontSize: 14px; lineHeight: 1.5; color: rgba(255,255,255,0.8);">{{ stage.hyp }}</p>
+                      <div style="display: flex; alignItems: center; gap: 12px; flexWrap: wrap;">
+                        <sc-for list="{{ stage.pathSteps }}" as="ps" hint-placeholder-count="3">
+                          <span style="display: inline-flex; alignItems: center; gap: 10px; fontSize: 13px; color: rgba(255,255,255,0.85);"><span style="padding: 7px 12px; borderRadius: 4px; border: 1px solid rgba(255,255,255,0.14);">{{ ps.t }}</span></span>
+                        </sc-for>
+                      </div>
+                    </div>
+                  </sc-if>
+                  <sc-if value="{{ stage.isDocs }}" hint-placeholder-val="{{ false }}">
+                    <div style="display: grid; gridTemplateColumns: repeat(4, minmax(0, 1fr)); gap: 10px;">
+                      <sc-for list="{{ stage.docItems }}" as="doc" hint-placeholder-count="4">
+                        <div style="minWidth: 0; padding: 10px; borderRadius: 6px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.09);">
+                          <div style="height: 44px; borderRadius: 3px; border: 1px solid rgba(255,255,255,0.12); backgroundImage: linear-gradient(rgba(255,255,255,0.16) 1px, transparent 1px); backgroundSize: 100% 8px; opacity: 0.7;"></div>
+                          <p style="margin: 9px 0 0; fontSize: 12px; lineHeight: 1.3; color: rgba(255,255,255,0.85);">{{ doc.t }}</p>
+                          <p style="margin: 3px 0 0; fontSize: 11px; lineHeight: 1.3; color: rgba(255,255,255,0.5);">{{ doc.sub }}</p>
+                        </div>
+                      </sc-for>
+                    </div>
+                  </sc-if>
+                  <sc-if value="{{ stage.isTrack }}" hint-placeholder-val="{{ false }}">
+                    <div style="display: grid; gap: 10px;">
+                      <sc-for list="{{ stage.trackRows }}" as="tr" hint-placeholder-count="4">
+                        <div style="display: grid; gridTemplateColumns: 150px minmax(0, 1fr); gap: 12px; alignItems: center;">
+                          <span style="fontSize: 12.5px; color: rgba(255,255,255,0.7);">{{ tr.t }}</span>
+                          <span style="display: block; height: 8px; borderRadius: 2px; background: rgba(255,255,255,0.07);"><span style="display: block; height: 8px; borderRadius: 2px; width: {{ tr.w }}; background: {{ stage.accent }}; opacity: 0.85;"></span></span>
+                        </div>
+                      </sc-for>
+                    </div>
+                  </sc-if>
+                  <sc-if value="{{ stage.isResult }}" hint-placeholder-val="{{ false }}">
+                    <div style="display: grid; gridTemplateColumns: minmax(0, 1fr) 150px; gap: 18px; alignItems: center;">
+                      <div style="display: grid; gap: 10px;">
+                        <sc-for list="{{ stage.metricRows }}" as="m" hint-placeholder-count="3">
+                          <div style="display: grid; gridTemplateColumns: 132px 104px minmax(0, 1fr); alignItems: baseline; gap: 12px;">
+                            <span style="fontFamily: 'IBM Plex Sans', sans-serif; fontSize: 18px; color: {{ stage.accent }};">{{ m.value }}</span>
+                            <span style="fontSize: 13px; color: rgba(255,255,255,0.82);">{{ m.label }}</span>
+                            <span style="fontSize: 12px; color: rgba(255,255,255,0.5);">{{ m.note }}</span>
+                          </div>
+                        </sc-for>
+                      </div>
+                      <svg viewBox="0 0 150 70" preserveAspectRatio="none" style="width: 100%; height: 70px;">
+                        <path d="M2 62 L30 54 L58 46 L86 32 L114 24 L146 8" fill="none" stroke="{{ stage.accent }}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path d="M2 62 L30 54 L58 46 L86 32 L114 24 L146 8 L146 70 L2 70 Z" fill="{{ stage.accent }}" fill-opacity="0.12"></path>
+                      </svg>
+                    </div>
+                  </sc-if>
+                </div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ block.isList }}" hint-placeholder-val="{{ false }}">
+        <div style="display: grid; gap: 0; marginTop: 8px; maxWidth: 920px; borderBottom: 1px solid rgba(255,255,255,0.16);">
+          <sc-for list="{{ block.items }}" as="item" hint-placeholder-count="4">
+            <div style="display: flex; gap: 14px; alignItems: flex-start; padding: 18px 0; borderTop: 1px solid rgba(255,255,255,0.16); fontSize: 17px; lineHeight: 1.6; color: rgba(255,255,255,0.78);">
+              <span class="ico3d" style="--s: 40px; --ic: #E3A93B; --glow: rgba(227,169,59,0.5); marginTop: -3px;"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"></path></svg></span>
+              <span><sc-for list="{{ item.parts }}" as="seg" hint-placeholder-count="1"><span style="color: {{ seg.color }}; fontWeight: {{ seg.weight }};">{{ seg.text }}</span></sc-for></span>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ block.isTable }}" hint-placeholder-val="{{ false }}">
+        <div data-tbl="1" style="display: grid; gap: 10px; marginTop: 8px;">
+          <div style="display: grid; gridTemplateColumns: 44px minmax(0, 1fr); alignItems: center;">
+            <span style="width: 44px;"></span>
+            <div style="display: grid; gridTemplateColumns: {{ block.grid }}; gap: 8px; padding: 0 25px 2px;">
+              <sc-for list="{{ block.cols }}" as="col" hint-placeholder-count="3">
+                <span style="minWidth: 0; fontSize: 12px; letterSpacing: 0.09em; textTransform: uppercase; color: {{ col.color }};">{{ col.text }}</span>
+              </sc-for>
+            </div>
+          </div>
+          <sc-for list="{{ block.rows }}" as="row" hint-placeholder-count="5">
+            <div style="position: relative; display: grid; gridTemplateColumns: 44px minmax(0, 1fr); alignItems: stretch;">
+              <div style="position: relative;">
+                <div style="position: absolute; left: 13px; top: 0; bottom: -10px; width: 2px; background: linear-gradient(to bottom, {{ row.accent }}, rgba(255,255,255,0.08));"></div>
+                <div style="position: absolute; left: 28px; top: 27px; width: 16px; height: 1px; background: linear-gradient(to right, {{ row.accent }}, rgba(255,255,255,0.06));"></div>
+                <div style="position: relative; marginTop: 21px; width: 12px; height: 12px; marginLeft: 8px; borderRadius: 50%; background: #14171B; border: 1.5px solid {{ row.accent }}; boxShadow: 0 0 12px -1px {{ row.accent }};"></div>
+              </div>
+              <div style="display: grid; gridTemplateColumns: {{ block.grid }}; gap: 8px; alignItems: stretch; padding: 8px 10px; borderRadius: 10px; background: rgba(20,23,28,0.82); border: 1px solid rgba(255,255,255,0.08);">
+                <sc-for list="{{ row.cells }}" as="cell" hint-placeholder-count="3">
+                  <span onClick="{{ cell.go }}" style="minWidth: 0; display: flex; alignItems: center; padding: 13px 15px; borderRadius: 7px; background: {{ cell.bg }}; boxShadow: {{ cell.edge }}; fontSize: {{ cell.size }}; lineHeight: 1.5; fontFamily: {{ cell.font }}; fontWeight: {{ cell.weight }}; color: {{ cell.color }}; cursor: {{ cell.cursor }}; textWrap: pretty;">{{ cell.text }}</span>
+                </sc-for>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ block.isPhoto }}" hint-placeholder-val="{{ false }}">
+        <div style="minWidth: 0; padding: 12px; borderRadius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); boxShadow: 0 1px 2px rgba(0,0,0,0.25), 0 10px 28px -10px rgba(0,0,0,0.4); marginTop: 8px;">
+          <div style="position: relative; minWidth: 0; width: 100%; height: 100%;"><image-slot id="{{ block.slotId }}" fallback-src="{{ block.photoSrc }}" shape="rounded" radius="16" style="width: 100%; height: 360px;" placeholder="Фото объекта"></image-slot><img class="mtu-wm" src="{{ srcMark }}" alt="" /></div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ block.isVideo }}" hint-placeholder-val="{{ false }}">
+        <div style="minWidth: 0; padding: 12px; borderRadius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); boxShadow: 0 1px 2px rgba(0,0,0,0.25), 0 10px 28px -10px rgba(0,0,0,0.4); marginTop: 8px;">
+          <video-slot id="{{ block.videoSlotId }}" fallback-src="{{ block.videoSrc }}" resource-id="{{ block.videoRes }}" height="420px" radius="6" watermark="{{ srcMark }}" placeholder="Перетащите видео установки сюда"></video-slot>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ block.isGallery }}" hint-placeholder-val="{{ false }}">
+        <div style="display: grid; gridTemplateColumns: 1.55fr 1fr; gap: 20px; marginTop: 8px; alignItems: stretch;">
+          <div style="minWidth: 0; padding: 12px; borderRadius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); boxShadow: 0 1px 2px rgba(0,0,0,0.25), 0 10px 28px -10px rgba(0,0,0,0.4);">
+            <div onTouchStart="{{ block.tStart }}" onTouchEnd="{{ block.tEnd }}" style="position: relative; minWidth: 0; overflow: hidden; borderRadius: 6px; touchAction: pan-y;">
+              <div style="display: flex; transform: {{ block.gShift }}; transition: transform 0.7s cubic-bezier(0.16,1,0.3,1);">
+                <sc-for list="{{ block.frames }}" as="frame" hint-placeholder-count="4">
+                  <div style="flex: 0 0 100%; minWidth: 0; height: 420px;">
+                    <div style="position: relative; minWidth: 0; width: 100%; height: 100%;"><image-slot id="{{ frame.id }}" fallback-src="{{ frame.src }}" shape="rect" placeholder="{{ frame.ph }}"></image-slot><img class="mtu-wm" src="{{ srcMark }}" alt="" /></div>
+                  </div>
+                </sc-for>
+              </div>
+              <button type="button" onClick="{{ block.gPrev }}" aria-label="Предыдущее фото" style="position: absolute; left: 12px; top: 50%; marginTop: -22px; width: 44px; height: 44px; display: flex; alignItems: center; justifyContent: center; padding: 0; borderRadius: 4px; cursor: pointer; color: #fff; background: rgba(20,23,27,0.62); border: 1px solid rgba(255,255,255,0.22); backdropFilter: blur(8px);" style-hover="background: rgba(227,169,59,0.9); color: #2B2F36;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg></button>
+              <button type="button" onClick="{{ block.gNext }}" aria-label="Следующее фото" style="position: absolute; right: 12px; top: 50%; marginTop: -22px; width: 44px; height: 44px; display: flex; alignItems: center; justifyContent: center; padding: 0; borderRadius: 4px; cursor: pointer; color: #fff; background: rgba(20,23,27,0.62); border: 1px solid rgba(255,255,255,0.22); backdropFilter: blur(8px);" style-hover="background: rgba(227,169,59,0.9); color: #2B2F36;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></button>
+            </div>
+            <div style="display: flex; gap: 8px; justifyContent: center; padding: 14px 0 4px;">
+              <sc-for list="{{ block.gDots }}" as="dot" hint-placeholder-count="4">
+                <button type="button" onClick="{{ dot.pick }}" style="width: 30px; height: 4px; borderRadius: 2px; border: none; cursor: pointer; padding: 0; background: {{ dot.bg }}; transition: background 0.18s ease-out;"></button>
+              </sc-for>
+            </div>
+          </div>
+          <div style="display: grid; gridTemplateRows: 1fr 1fr; gap: 20px; minWidth: 0;">
+            <div style="minWidth: 0; padding: 12px; borderRadius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); boxShadow: 0 1px 2px rgba(0,0,0,0.25), 0 10px 28px -10px rgba(0,0,0,0.4);">
+              <div style="position: relative; minWidth: 0; width: 100%; height: 100%;"><image-slot id="{{ block.detailA }}" fallback-src="{{ block.detailASrc }}" shape="rounded" radius="12" style="width: 100%; height: 100%; minHeight: 190px;" placeholder="Деталь: газовый узел"></image-slot><img class="mtu-wm" src="{{ srcMark }}" alt="" /></div>
+            </div>
+            <div style="minWidth: 0; padding: 12px; borderRadius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); boxShadow: 0 1px 2px rgba(0,0,0,0.25), 0 10px 28px -10px rgba(0,0,0,0.4);">
+              <div style="position: relative; minWidth: 0; width: 100%; height: 100%;"><image-slot id="{{ block.detailB }}" fallback-src="{{ block.detailBSrc }}" shape="rounded" radius="12" style="width: 100%; height: 100%; minHeight: 190px;" placeholder="Деталь: автоматика и щит"></image-slot><img class="mtu-wm" src="{{ srcMark }}" alt="" /></div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ block.isMediaRow }}" hint-placeholder-val="{{ false }}">
+        <div style="display: grid; gridTemplateColumns: 1fr 1fr; gap: 20px; marginTop: 8px;">
+          <div style="minWidth: 0; padding: 12px; borderRadius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); boxShadow: 0 1px 2px rgba(0,0,0,0.25), 0 10px 28px -10px rgba(0,0,0,0.4);">
+            <div style="position: relative; minWidth: 0; width: 100%; height: 100%;"><image-slot id="{{ block.mediaA }}" fallback-src="{{ block.mediaASrc }}" shape="rounded" radius="12" style="width: 100%; height: 300px;" placeholder="Анимация: монтаж установки (GIF / кадр)"></image-slot><img class="mtu-wm" src="{{ srcMark }}" alt="" /></div>
+            <p style="margin: 12px 4px 2px; fontSize: 14px; color: rgba(255,255,255,0.55);">{{ block.mediaACap }}</p>
+          </div>
+          <div style="minWidth: 0; padding: 12px; borderRadius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); boxShadow: 0 1px 2px rgba(0,0,0,0.25), 0 10px 28px -10px rgba(0,0,0,0.4);">
+            <div style="position: relative; minWidth: 0; width: 100%; height: 100%;"><image-slot id="{{ block.mediaB }}" fallback-src="{{ block.mediaBSrc }}" shape="rounded" radius="12" style="width: 100%; height: 300px;" placeholder="Анимация: схема работы МТУ"></image-slot><img class="mtu-wm" src="{{ srcMark }}" alt="" /></div>
+            <p style="margin: 12px 4px 2px; fontSize: 14px; color: rgba(255,255,255,0.55);">{{ block.mediaBCap }}</p>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ block.isObjectGrid }}" hint-placeholder-val="{{ false }}">
+        <sc-if value="{{ block.hasFilters }}" hint-placeholder-val="{{ false }}">
+        <div style="display: flex; alignItems: flex-end; gap: 16px; flexWrap: wrap; marginTop: 8px; marginBottom: 32px; padding: 22px 24px; borderRadius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); boxShadow: 0 1px 2px rgba(0,0,0,0.25), 0 10px 28px -10px rgba(0,0,0,0.4);">
+          <div style="minWidth: 200px; flex: 1; display: flex; flexDirection: column; gap: 8px;">
+            <span style="fontSize: 12px; letterSpacing: 0.12em; textTransform: uppercase; color: rgba(255,255,255,0.5);">Мощность</span>
+            <select onChange="{{ block.onFPower }}" style="boxSizing: border-box; width: 100%; padding: 13px 16px; borderRadius: 4px; background: rgba(0,0,0,0.35); border: 1px solid rgba(255,255,255,0.16); color: rgba(255,255,255,0.85); fontFamily: inherit; fontSize: 16px; outline: none;">
+              <sc-for list="{{ block.fPower }}" as="o" hint-placeholder-count="1"><option value="{{ o.v }}" selected="{{ o.sel }}" style="color: #222;">{{ o.t }}</option></sc-for>
+            </select>
+          </div>
+          <div style="minWidth: 200px; flex: 1; display: flex; flexDirection: column; gap: 8px;">
+            <span style="fontSize: 12px; letterSpacing: 0.12em; textTransform: uppercase; color: rgba(255,255,255,0.5);">Тип объекта</span>
+            <select onChange="{{ block.onFType }}" style="boxSizing: border-box; width: 100%; padding: 13px 16px; borderRadius: 4px; background: rgba(0,0,0,0.35); border: 1px solid rgba(255,255,255,0.16); color: rgba(255,255,255,0.85); fontFamily: inherit; fontSize: 16px; outline: none;">
+              <sc-for list="{{ block.fType }}" as="o" hint-placeholder-count="1"><option value="{{ o.v }}" selected="{{ o.sel }}" style="color: #222;">{{ o.t }}</option></sc-for>
+            </select>
+          </div>
+          <div style="minWidth: 200px; flex: 1; display: flex; flexDirection: column; gap: 8px;">
+            <span style="fontSize: 12px; letterSpacing: 0.12em; textTransform: uppercase; color: rgba(255,255,255,0.5);">Способ подачи топлива</span>
+            <select onChange="{{ block.onFFuel }}" style="boxSizing: border-box; width: 100%; padding: 13px 16px; borderRadius: 4px; background: rgba(0,0,0,0.35); border: 1px solid rgba(255,255,255,0.16); color: rgba(255,255,255,0.85); fontFamily: inherit; fontSize: 16px; outline: none;">
+              <sc-for list="{{ block.fFuel }}" as="o" hint-placeholder-count="1"><option value="{{ o.v }}" selected="{{ o.sel }}" style="color: #222;">{{ o.t }}</option></sc-for>
+            </select>
+          </div>
+        </div>
+        </sc-if>
+
+        <sc-if value="{{ block.hasFilters }}" hint-placeholder-val="{{ false }}"><p style="margin: 0 0 20px; fontFamily: 'IBM Plex Sans', sans-serif; fontSize: 14px; color: rgba(255,255,255,0.6);">{{ block.objCount }}</p></sc-if>
+        <div style="display: grid; gridTemplateColumns: repeat(3, minmax(0, 1fr)); gap: 24px;">
+          <sc-for list="{{ block.objects }}" as="obj" hint-placeholder-count="9">
+            <div style="minWidth: 0; display: flex; flexDirection: column; borderRadius: 8px; overflow: hidden; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); transition: border-color 160ms ease;" style-hover="borderColor: rgba(227,169,59,0.45);">
+              <div onTouchStart="{{ obj.tStart }}" onTouchEnd="{{ obj.tEnd }}" style="position: relative; minWidth: 0; overflow: hidden; touchAction: pan-y;">
+                <div style="display: flex; transform: {{ obj.shift }}; transition: transform 0.6s cubic-bezier(0.16,1,0.3,1);">
+                  <sc-for list="{{ obj.shots }}" as="shot" hint-placeholder-count="3">
+                    <div style="flex: 0 0 100%; minWidth: 0; height: 220px;">
+                      <div style="position: relative; minWidth: 0; width: 100%; height: 100%;"><image-slot id="{{ shot.id }}" fallback-src="{{ shot.src }}" shape="rect" placeholder="{{ shot.ph }}"></image-slot><img class="mtu-wm" src="{{ srcMark }}" alt="" /></div>
+                    </div>
+                  </sc-for>
+                </div>
+                <button type="button" onClick="{{ obj.prev }}" aria-label="Предыдущее фото" style="position: absolute; left: 10px; top: 50%; marginTop: -22px; width: 44px; height: 44px; display: flex; alignItems: center; justifyContent: center; padding: 0; borderRadius: 4px; cursor: pointer; color: #fff; background: rgba(20,23,27,0.62); border: 1px solid rgba(255,255,255,0.22); backdropFilter: blur(8px);" style-hover="background: rgba(227,169,59,0.9); color: #2B2F36;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg></button>
+                <button type="button" onClick="{{ obj.next }}" aria-label="Следующее фото" style="position: absolute; right: 10px; top: 50%; marginTop: -22px; width: 44px; height: 44px; display: flex; alignItems: center; justifyContent: center; padding: 0; borderRadius: 4px; cursor: pointer; color: #fff; background: rgba(20,23,27,0.62); border: 1px solid rgba(255,255,255,0.22); backdropFilter: blur(8px);" style-hover="background: rgba(227,169,59,0.9); color: #2B2F36;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></button>
+                <div style="position: absolute; left: 14px; right: 14px; bottom: 12px; display: flex; gap: 6px;">
+                  <sc-for list="{{ obj.dots }}" as="d" hint-placeholder-count="3">
+                    <button type="button" onClick="{{ d.pick }}" style="flex: 1; height: 3px; padding: 0; border: none; borderRadius: 999px; cursor: pointer; background: {{ d.bg }}; transition: background 220ms ease;"></button>
+                  </sc-for>
+                </div>
+              </div>
+
+              <div style="display: flex; flexDirection: column; flex: 1; gap: 14px; padding: 22px 24px 24px;">
+                <span style="fontFamily: 'IBM Plex Sans', sans-serif; fontSize: 12px; letterSpacing: 0.1em; textTransform: uppercase; color: #E3A93B; whiteSpace: nowrap; overflow: hidden; textOverflow: ellipsis;">{{ obj.type }}</span>
+                <h3 style="margin: 0; height: 78px; display: -webkit-box; WebkitLineClamp: 3; WebkitBoxOrient: vertical; overflow: hidden; fontSize: 20px; fontWeight: 600; lineHeight: 1.3; color: #fff;">{{ obj.name }}</h3>
+                <span style="marginTop: -6px; height: 40px; display: -webkit-box; WebkitLineClamp: 2; WebkitBoxOrient: vertical; overflow: hidden; fontSize: 14px; lineHeight: 1.4; color: rgba(255,255,255,0.6);">{{ obj.place }}</span>
+                <div style="display: grid; gridTemplateColumns: 1fr 1fr; gap: 12px; paddingTop: 14px; borderTop: 1px solid rgba(255,255,255,0.12);">
+                  <div style="display: flex; flexDirection: column; gap: 3px;">
+                    <span style="fontSize: 11px; letterSpacing: 0.1em; textTransform: uppercase; color: rgba(255,255,255,0.45);">мощность</span>
+                    <span style="fontFamily: 'IBM Plex Sans', sans-serif; fontSize: 15px; color: #fff;">{{ obj.power }}</span>
+                  </div>
+                  <div style="display: flex; flexDirection: column; gap: 3px;">
+                    <span style="fontSize: 11px; letterSpacing: 0.1em; textTransform: uppercase; color: rgba(255,255,255,0.45);">площадь</span>
+                    <span style="fontFamily: 'IBM Plex Sans', sans-serif; fontSize: 15px; color: #fff;">{{ obj.area }}</span>
+                  </div>
+                  <div style="display: flex; flexDirection: column; gap: 3px;">
+                    <span style="fontSize: 11px; letterSpacing: 0.1em; textTransform: uppercase; color: rgba(255,255,255,0.45);">подача топлива</span>
+                    <span style="fontSize: 15px; color: rgba(255,255,255,0.8);">{{ obj.fuel }}</span>
+                  </div>
+                  <div style="display: flex; flexDirection: column; gap: 3px;">
+                    <span style="fontSize: 11px; letterSpacing: 0.1em; textTransform: uppercase; color: rgba(255,255,255,0.45);">решение</span>
+                    <span style="height: 63px; display: -webkit-box; WebkitLineClamp: 3; WebkitBoxOrient: vertical; overflow: hidden; fontSize: 15px; lineHeight: 1.4; color: rgba(255,255,255,0.8);">{{ obj.solution }}</span>
+                  </div>
+                </div>
+                <a href="#" data-chev="1" onClick="{{ obj.open }}" style="display: flex; alignItems: center; justifyContent: space-between; gap: 12px; marginTop: auto; padding: 11px 12px 11px 18px; borderRadius: 4px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.16); fontSize: 16px; color: #fff; transition: background 160ms ease;" style-hover="color: #fff; background: rgba(255,255,255,0.16);">Подробнее
+                  <span class="ico3d" style="--s: 40px; --ic: #E3A93B; --glow: rgba(227,169,59,0.6);">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2B2F36" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                  </span>
+                </a>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ block.isDocs }}" hint-placeholder-val="{{ false }}">
+        <div style="display: grid; gridTemplateColumns: repeat(5, 1fr); gap: 16px; marginTop: 8px;">
+          <sc-for list="{{ block.docs }}" as="doc" hint-placeholder-count="5">
+            <div style="minWidth: 0; display: flex; flexDirection: column; gap: 12px; padding: 14px; borderRadius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); boxShadow: 0 1px 2px rgba(0,0,0,0.25), 0 10px 28px -10px rgba(0,0,0,0.4);">
+              <p style="margin: 0; minHeight: 40px; fontSize: 14px; fontWeight: 600; lineHeight: 1.35; textWrap: pretty; color: #fff;">{{ doc.title }}</p>
+              <div style="position: relative; minWidth: 0; width: 100%; height: auto; flex: 0 0 auto;"><image-slot id="{{ doc.id }}" shape="rounded" radius="10" style="width: 100%; height: 270px;" placeholder="{{ doc.ph }}"></image-slot><img class="mtu-wm" src="{{ srcMark }}" alt="" /></div>
+              <button type="button" onClick="{{ doc.open }}" style="display: flex; alignItems: center; justifyContent: center; gap: 8px; width: 100%; padding: 10px 12px; borderRadius: 4px; cursor: pointer; fontFamily: inherit; fontSize: 14px; fontWeight: 500; color: #fff; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.16); transition: background 160ms ease;" style-hover="background: rgba(255,255,255,0.14);">Посмотреть
+                <span class="ico3d" style="--s: 34px; --ic: #E3A93B; --glow: rgba(227,169,59,0.55);"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg></span>
+              </button>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ block.isPhotoRow }}" hint-placeholder-val="{{ false }}">
+        <div style="display: grid; gridTemplateColumns: repeat(3, 1fr); gap: 20px; marginTop: 8px;">
+          <sc-for list="{{ block.rowPhotos }}" as="ph" hint-placeholder-count="3">
+          <div style="minWidth: 0; padding: 10px; borderRadius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); boxShadow: 0 1px 2px rgba(0,0,0,0.25), 0 10px 28px -10px rgba(0,0,0,0.4);">
+            <div style="position: relative; minWidth: 0; width: 100%; height: 100%;"><image-slot id="{{ ph.id }}" fallback-src="{{ ph.src }}" shape="rounded" radius="14" style="width: 100%; height: 220px;" placeholder="{{ ph.label }}"></image-slot><img class="mtu-wm" src="{{ srcMark }}" alt="" /></div>
+          </div>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ block.isContactLines }}" hint-placeholder-val="{{ false }}">
+        <div style="display: grid; gap: 10px; marginTop: 8px; maxWidth: 720px;">
+          <a href="tel:+79167656565" style="display: flex; alignItems: center; gap: 14px; padding: 16px 18px; borderRadius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #F4F5F7; minHeight: 60px; transition: background 150ms ease-out, border-color 150ms ease-out;" style-hover="background: rgba(255,255,255,0.09); color: #fff;">
+            <span class="ico3d" style="--s: 54px; --ic: #E3A93B; --glow: rgba(227,169,59,0.6);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            </span>
+            <span style="display: grid; gap: 3px; minWidth: 0;">
+              <span style="fontFamily: 'IBM Plex Sans', sans-serif; fontSize: 11.5px; letterSpacing: 0.08em; textTransform: uppercase; color: rgba(244,245,247,0.5);">Телефон</span>
+              <span style="fontSize: 17px; fontWeight: 600;">+7 (916) 765-65-65</span>
+            </span>
+          </a>
+          <a href="mailto:info@gkmtu.ru" style="display: flex; alignItems: center; gap: 14px; padding: 16px 18px; borderRadius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #F4F5F7; minHeight: 60px; transition: background 150ms ease-out;" style-hover="background: rgba(255,255,255,0.09); color: #fff;">
+            <span class="ico3d" style="--s: 54px; --ic: #9CB6D4; --glow: rgba(62,90,122,0.8);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m2.5 6 9.5 7 9.5-7"></path></svg>
+            </span>
+            <span style="display: grid; gap: 3px; minWidth: 0;">
+              <span style="fontFamily: 'IBM Plex Sans', sans-serif; fontSize: 11.5px; letterSpacing: 0.08em; textTransform: uppercase; color: rgba(244,245,247,0.5);">E-mail</span>
+              <span style="fontSize: 17px; fontWeight: 600;">info@gkmtu.ru</span>
+            </span>
+          </a>
+          <div style="display: flex; alignItems: center; gap: 14px; padding: 16px 18px; borderRadius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #F4F5F7; minHeight: 60px;">
+            <span class="ico3d" style="--s: 54px; --ic: #E58C74; --glow: rgba(181,82,58,0.75);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            </span>
+            <span style="display: grid; gap: 3px; minWidth: 0;">
+              <span style="fontFamily: 'IBM Plex Sans', sans-serif; fontSize: 11.5px; letterSpacing: 0.08em; textTransform: uppercase; color: rgba(244,245,247,0.5);">Адрес</span>
+              <span style="fontSize: 17px; fontWeight: 600;">Московская обл., г. Балашиха, Покровский проезд, влд 1</span>
+            </span>
+          </div>
+          <div style="display: flex; alignItems: center; gap: 14px; padding: 16px 18px; borderRadius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #F4F5F7; minHeight: 60px;">
+            <span class="ico3d" style="--s: 54px; --ic: #F4F5F7; --glow: rgba(244,245,247,0.4);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3.5 2"></path></svg>
+            </span>
+            <span style="display: grid; gap: 3px; minWidth: 0;">
+              <span style="fontFamily: 'IBM Plex Sans', sans-serif; fontSize: 11.5px; letterSpacing: 0.08em; textTransform: uppercase; color: rgba(244,245,247,0.5);">На рынке</span>
+              <span style="fontSize: 17px; fontWeight: 600;">Компания основана в 2021 году</span>
+            </span>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ block.isBot }}" hint-placeholder-val="{{ false }}">
+        <div style="display: flex; alignItems: center; justifyContent: space-between; flexWrap: wrap; gap: 28px; marginTop: 8px; padding: 28px 32px; borderRadius: 8px; background: rgba(62,90,122,0.18); border: 1px solid rgba(62,90,122,0.55);">
+          <div style="display: grid; gap: 10px; minWidth: 260px; maxWidth: 620px;">
+            <span style="fontFamily: 'IBM Plex Sans', sans-serif; fontSize: 11.5px; letterSpacing: 0.1em; textTransform: uppercase; color: #E3A93B;">Полная версия помощника</span>
+            <span style="fontFamily: 'IBM Plex Serif', serif; fontSize: 26px; lineHeight: 1.24; color: #fff;">Помощник МТУ в Telegram</span>
+            <span style="fontSize: 16px; lineHeight: 1.6; color: rgba(244,245,247,0.78); textWrap: pretty;">Подбор мощности, расчёт под ваш объект, документы и статус заявки — в одном чате. Помощник отвечает круглосуточно, а сложные вопросы сразу передаёт инженеру.</span>
+          </div>
+          <a href="{{ botHref }}" target="_blank" rel="noopener" style="display: flex; alignItems: center; gap: 10px; padding: 15px 26px; borderRadius: 4px; background: #E3A93B; color: #22262C; fontSize: 16px; fontWeight: 600; whiteSpace: nowrap; minHeight: 52px; transition: background 150ms ease-out;" style-hover="background: #D19B31; color: #22262C;">
+            <span class="ico3d" style="--s: 42px; --ic: #9CB6D4; --glow: rgba(62,90,122,0.85);"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 3.5 2.8 10.6c-.9.35-.86 1.63.06 1.92l4.4 1.4 1.7 5.3c.28.87 1.45 1 1.9.2l2.4-4.2 4.6 3.4c.75.55 1.8.13 1.96-.78l2.6-13.1c.17-.9-.7-1.6-1.52-1.24z"></path></svg></span>
+            Открыть в Telegram
+          </a>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ block.isMap }}" hint-placeholder-val="{{ false }}">
+        <div style="minWidth: 0; padding: 12px; borderRadius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); boxShadow: 0 1px 2px rgba(0,0,0,0.25), 0 10px 28px -10px rgba(0,0,0,0.4); marginTop: 8px;">
+          <div style="position: relative; minWidth: 0; width: 100%; height: 100%;"><image-slot id="contacts-map" shape="rounded" radius="16" style="width: 100%; height: 320px;" placeholder="Карта и схема проезда"></image-slot><img class="mtu-wm" src="{{ srcMark }}" alt="" /></div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ block.isFaq }}" hint-placeholder-val="{{ false }}">
+        <div style="display: grid; gap: 0; marginTop: 8px; maxWidth: 920px; borderTop: 1px solid rgba(255,255,255,0.16);">
+          <sc-for list="{{ block.faq }}" as="item" hint-placeholder-count="3">
+            <div style="borderBottom: 1px solid rgba(255,255,255,0.16); overflow: hidden;">
+              <button type="button" onClick="{{ item.toggle }}" style="display: flex; alignItems: center; justifyContent: space-between; gap: 20px; width: 100%; padding: 22px 4px; background: transparent; border: none; color: #fff; fontFamily: inherit; fontSize: 18px; fontWeight: 500; textAlign: left; cursor: pointer;">
+                {{ item.q }}
+                <span style="fontSize: 24px; lineHeight: 1; color: #B5523A;">{{ item.sign }}</span>
+              </button>
+              <sc-if value="{{ item.open }}" hint-placeholder-val="{{ false }}">
+                <p style="margin: 0; padding: 0 26px 24px; fontSize: 17px; lineHeight: 1.7; color: rgba(255,255,255,0.7);">{{ item.a }}</p>
+              </sc-if>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ block.hasAction }}" hint-placeholder-val="{{ false }}">
+        <div style="display: flex; alignItems: center; gap: 18px; marginTop: 26px; flexWrap: wrap;">
+          <a href="#final" style="display: flex; alignItems: center; gap: 16px; padding: 14px 14px 14px 26px; borderRadius: 4px; fontSize: 18px; fontWeight: 600; color: #2B2F36; background: #E3A93B; boxShadow: 0 6px 18px rgba(0,0,0,0.3); transition: box-shadow 180ms ease, transform 180ms ease;" style-hover="color: #2B2F36; boxShadow: 0 6px 18px rgba(0,0,0,0.3); transform: translateY(-2px);">{{ block.actionLabel }}
+            <span class="ico3d" style="--s: 48px; --ic: #E3A93B; --glow: rgba(227,169,59,0.6);">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#E3A93B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </span>
+          </a>
+          <span style="fontSize: 15px; color: rgba(255,255,255,0.6);">{{ block.actionNote }}</span>
+        </div>
+      </sc-if>
+    </section>
+  </sc-for>
+
+  <section id="final" style="position: relative; maxWidth: 1180px; margin: 0 auto; padding: 96px 24px 108px;">
+    <div style="position: relative; overflow: hidden; padding: 52px; borderRadius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12); boxShadow: 0 1px 2px rgba(0,0,0,0.25), 0 10px 28px -10px rgba(0,0,0,0.4);">
+      <div style="position: absolute; top: -40%; left: 35%; width: 520px; height: 520px; borderRadius: 9999px; background: rgba(62,90,122,0.3); filter: blur(120px); mixBlendMode: screen; pointerEvents: none;"></div>
+      <div style="position: relative; display: grid; gridTemplateColumns: 1fr 1fr; gap: 48px;">
+        <div style="minWidth: 0;">
+          <h2 style="margin: 0 0 18px; fontSize: 36px; fontWeight: 600; letterSpacing: -0.025em; lineHeight: 1.18;">{{ finalTitle }}</h2>
+          <p style="margin: 0 0 28px; fontSize: 19px; lineHeight: 1.7; color: rgba(255,255,255,0.7);">{{ finalText }}</p>
+          <div style="display: flex; alignItems: center; gap: 12px; fontSize: 16px; color: rgba(255,255,255,0.6);">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E3A93B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+            Ответим в течение 10 минут
+          </div>
+        </div>
+        <div style="minWidth: 0; display: grid; gap: 14px;">
+          <p style="margin: 0; fontSize: 19px; lineHeight: 1.6; fontWeight: 500; color: rgba(255,255,255,0.85);">Ответьте на 3 вопроса и подберите подходящую установку</p>
+          <div style="display: flex; alignItems: center; gap: 16px; marginTop: 6px; flexWrap: wrap;">
+            <a href="#final" style="display: flex; alignItems: center; gap: 16px; padding: 15px 15px 15px 28px; borderRadius: 4px; background: #E3A93B; color: #2B2F36; fontSize: 19px; fontWeight: 600; boxShadow: 0 6px 18px rgba(0,0,0,0.3); transition: transform 180ms ease, box-shadow 180ms ease;" style-hover="color: #2B2F36; boxShadow: 0 6px 18px rgba(0,0,0,0.3); transform: translateY(-2px);">{{ finalCta }}
+              <span class="ico3d" style="--s: 48px; --ic: #E3A93B; --glow: rgba(227,169,59,0.6);">
+                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#E3A93B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+              </span>
+            </a>
+            <a href="#callback" style="fontSize: 16px; color: rgba(255,255,255,0.65); transition: color 160ms ease;" style-hover="color: #fff;">{{ finalSecondary }}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer style="position: relative; borderTop: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.02);">
+    <div style="maxWidth: 1180px; margin: 0 auto; padding: 52px 24px 68px; display: grid; gap: 20px;">
+      <img src="{{ srcLogo }}" alt="ГК «МТУ»" style="height: 112px; width: auto; opacity: 0.9;">
+      <sc-for list="{{ seo }}" as="para" hint-placeholder-count="2">
+        <p style="margin: 0; fontSize: 15px; lineHeight: 1.75; color: rgba(255,255,255,0.45);">{{ para.text }}</p>
+      </sc-for>
+      <div style="display: flex; alignItems: center; justifyContent: space-between; gap: 24px; paddingTop: 22px; borderTop: 1px solid rgba(255,255,255,0.08); fontSize: 14px; color: rgba(255,255,255,0.4); flexWrap: wrap;">
+        <span>ГК «МТУ» · gkmtu.ru · Московская обл., г. Балашиха, Покровский проезд, влд 1</span>
+        <span>+7 (916) 765-65-65 · info@gkmtu.ru</span>
+      </div>
+    </div>
+  </footer>
+
+  <sc-if value="{{ docOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeDoc }}" style="position: fixed; inset: 0; zIndex: 80; display: flex; flexDirection: column; alignItems: center; justifyContent: center; gap: 18px; padding: 48px; background: rgba(20,23,27,0.88); cursor: zoom-out;">
+      <p style="margin: 0; fontSize: 15px; letterSpacing: 0.12em; textTransform: uppercase; color: rgba(255,255,255,0.7);">{{ docTitle }}</p>
+      <sc-if value="{{ docSrc }}" hint-placeholder-val="{{ false }}">
+        <div style="position: relative; display: inline-block; maxWidth: 100%;">
+          <img src="{{ docSrc }}" alt="{{ docTitle }}" style="maxWidth: 100%; maxHeight: 78vh; borderRadius: 8px; border: 1px solid rgba(255,255,255,0.16); background: #fff; display: block;">
+          <img src="{{ srcMark }}" alt="" style="position: absolute; right: 14px; bottom: 14px; width: 84px; opacity: 0.34; pointerEvents: none; filter: drop-shadow(0 1px 3px rgba(0,0,0,0.35));">
+        </div>
+      </sc-if>
+      <sc-if value="{{ docMissing }}" hint-placeholder-val="{{ false }}">
+        <p style="margin: 0; maxWidth: 420px; textAlign: center; fontSize: 16px; lineHeight: 1.6; color: rgba(255,255,255,0.7);">Скан документа ещё не загружен в карточку.</p>
+      </sc-if>
+      <button type="button" onClick="{{ closeDoc }}" style="padding: 10px 18px; borderRadius: 4px; cursor: pointer; fontFamily: inherit; fontSize: 14px; color: #fff; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);">Закрыть</button>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ chatClosed }}" hint-placeholder-val="{{ true }}">
+    <button type="button" onClick="{{ openChat }}" aria-label="Консультант онлайн" title="Консультант онлайн" style="position: fixed; right: 0; top: calc(50% - 48px); zIndex: 40; width: 40px; height: 96px; display: flex; alignItems: center; justifyContent: center; border: none; cursor: pointer; borderRadius: 8px 0 0 8px; background: #3E5A7A; color: #fff; boxShadow: 0 8px 24px rgba(0,0,0,0.35); transition: width 150ms ease, background 150ms ease;" style-hover="width: 48px; background: #4B6B8F;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg>
+    </button>
+  </sc-if>
+  <sc-if value="{{ chatOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position: fixed; right: 24px; bottom: 24px; zIndex: 70; width: 360px; maxWidth: calc(100vw - 32px); height: 500px; maxHeight: calc(100vh - 80px); display: flex; flexDirection: column; borderRadius: 8px; background: #1B1E23; border: 1px solid rgba(255,255,255,0.12); boxShadow: 0 24px 56px rgba(0,0,0,0.55); overflow: hidden;">
+      <div style="display: flex; alignItems: center; justifyContent: space-between; gap: 12px; padding: 14px 8px 14px 18px; background: #2B2F36;">
+        <span style="display: grid; gap: 2px;"><span style="fontSize: 16px; fontWeight: 600; color: #fff;">Консультант онлайн</span><span style="fontSize: 12.5px; color: rgba(255,255,255,0.6);">Подскажу по мощности, срокам и аренде</span></span>
+        <button type="button" onClick="{{ closeChat }}" aria-label="Свернуть" style="width: 44px; height: 44px; display: flex; alignItems: center; justifyContent: center; border: none; borderRadius: 4px; background: transparent; color: rgba(255,255,255,0.8); cursor: pointer;" style-hover="background: rgba(227,169,59,0.16); color: #fff;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg>
+        </button>
+      </div>
+      <div data-chat-log="1" style="flex: 1; minHeight: 0; overflowY: auto; display: flex; flexDirection: column; gap: 10px; padding: 16px 18px;">
+        <sc-for list="{{ chatLog }}" as="m" hint-placeholder-count="1">
+          <div style="maxWidth: 86%; alignSelf: {{ m.align }}; padding: 10px 14px; borderRadius: 8px; background: {{ m.bg }}; color: {{ m.color }}; fontSize: 14.5px; lineHeight: 1.5; textWrap: pretty;">{{ m.text }}</div>
+        </sc-for>
+      </div>
+      <div style="display: flex; flexWrap: wrap; gap: 6px; padding: 0 18px 12px;">
+        <sc-for list="{{ chatChips }}" as="c" hint-placeholder-count="3">
+          <button type="button" onClick="{{ c.ask }}" style="padding: 8px 12px; minHeight: 36px; borderRadius: 4px; border: none; cursor: pointer; background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.85); fontFamily: inherit; fontSize: 13px; transition: background 140ms ease;" style-hover="background: rgba(227,169,59,0.16); color: #fff;">{{ c.label }}</button>
+        </sc-for>
+      </div>
+      <form onSubmit="{{ chatSubmit }}" style="display: flex; gap: 8px; padding: 12px 18px 16px; borderTop: 1px solid rgba(255,255,255,0.08);">
+        <input type="text" value="{{ chatText }}" onInput="{{ onChatText }}" placeholder="Ваш вопрос" style="flex: 1; minWidth: 0; padding: 11px 12px; minHeight: 44px; boxSizing: border-box; borderRadius: 4px; border: 1px solid rgba(255,255,255,0.16); background: rgba(255,255,255,0.05); color: #fff; fontFamily: inherit; fontSize: 14px;">
+        <button type="submit" aria-label="Отправить" style="width: 44px; height: 44px; display: flex; alignItems: center; justifyContent: center; border: none; borderRadius: 4px; background: #E3A93B; color: #22262C; cursor: pointer; transition: background 140ms ease;" style-hover="background: #F0B94D;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+        </button>
+      </form>
+    </div>
+  </sc-if>
+</div>
+
+<template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#2B2F36"/><rect x="30" y="34" width="40" height="34" rx="2" fill="#F4F5F7"/><rect x="30" y="34" width="13" height="21" fill="#C9CFD7"/><circle cx="60" cy="31" r="4" fill="#E3A93B"/><text x="50" y="84" text-anchor="middle" font-family="IBM Plex Sans, monospace" font-size="13" fill="#E3A93B">МТУ</text></svg></template>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;embedded&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;onHome&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;() =&gt; void&quot;},&quot;startKey&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  state = { pages: null, i: 0, open: {}, menuOpen: false, contactOpen: false, ch: "tg", cMsg: "", cContact: "", chatOpen: false, chatText: "", chatLog: [{ mine: false, text: "Здравствуйте! Я консультант ГК «МТУ». Подскажу по мощности, срокам, аренде и документам." }],
+    area: 300, mount: "wall", boiler: "mizudo", color: "graphite", closeProgress: 0, openCard: -1 };
+
+  catalogVals() {
+    const open = this.state.openCard;
+    const emb = !!this.props.embedded;
+    return {
+      srcMark: this.res("rMark", "assets/mtu-mark.webp"),
+      srcUnitOpen: this.res("rUnitOpen", "assets/mtu-unit-open.webp"),
+      srcUnitClosed: this.res("rUnitClosed", "assets/mtu-unit-closed.webp"),
+      srcLogo: this.res("rLogo", "assets/mtu-logo-full.webp"),
+      srcHeroOpen: this.res("rHeroOpen", "assets/mtu-hero-open-v2.webp"),
+      srcHeroClosed: this.res("rHeroClosed", "assets/mtu-hero-closed-v2.webp"),
+      srcClip: this.res("rClip", "uploads/597fdef46a77c4bf6221ca5a1db2da14_e996d492-0d8d-4260-ac64-be2e7a76c090.mp4"),
+      homeHref: emb ? "#" : encodeURI("index.html"),
+      onHome: (e) => {
+        if (emb) {
+          if (e && e.preventDefault) e.preventDefault();
+          if (this.props.onHome) this.props.onHome();
+          try { window.scrollTo({ top: 0, behavior: "smooth" }); } catch (err) { window.scrollTo(0, 0); }
+        } else {
+          if (e && e.preventDefault) e.preventDefault();
+          const u = new URL(encodeURI("index.html"), window.location.href).href;
+          try { window.location.assign(u); } catch (er) { try { window.top.location.assign(u); } catch (er2) { window.open(u, "_self"); } }
+        }
+      },
+      catalogCards: this.catalogData.map((r, i) => this.buildCard(r, i)),
+      modalOpen: open >= 0,
+      modalName: open >= 0 ? this.catalogData[open][0] : "",
+      modalDesc: open >= 0 ? this.catalogData[open][1] : "",
+      modalSpecs: open >= 0 ? this.specRows(open) : [],
+      modalNote: open >= 0 ? (this.passports[open] ? "Паспортные данные типоразмера " + this.passports[open].model + "." : "Общие данные для линейки. Точные параметры типоразмера — в коммерческом предложении.") : "",
+      closeModal: () => this.setState({ openCard: -1 }),
+      stopClick: (e) => { if (e && e.stopPropagation) e.stopPropagation(); },
+      baseKit: this.baseKitData.map((text, i) => ({ text, tick: i % 2 === 0 ? "#E3A93B" : "#B5523A" })),
+      techFeatures: []
+    };
+  }
+
+  passports = {
+    2: { model: "МТУ-80", rows: [["Типоразмер", "МТУ-80"], ["Мощность", "80 кВт (2 котла × 40 кВт)"], ["КПД", "91,9 %"], ["Габариты (Д × Ш × В)", "1800 × 450 × 2000 мм"], ["Масса", "≈ 290 кг"], ["Дымоудаление", "коаксиальное 80 × 125 мм"], ["Расход газа", "8,46 м³/ч"], ["Электропитание", "230 В, 50 Гц, до 1,5 кВт"], ["Присоединение", "газ Ду25, отопление Ду32"]] },
+    5: { model: "МТУ-345", rows: [["Типоразмер", "МТУ-345"], ["Мощность", "345 кВт (3 котла × 115 кВт)"], ["КПД", "96,7 %"], ["Габариты (Д × Ш × В)", "3200 × 850 × 2250 мм"], ["Масса", "≈ 820 кг"], ["Дымоудаление", "коаксиальное 100 × 150 мм"], ["Расход газа", "33,45 м³/ч"], ["Электропитание", "230 В, 50 Гц, до 2,5 кВт"], ["Присоединение", "газ Ду32, отопление Ду65"]] }
+  };
+
+  specRows(i) {
+    const r = this.catalogData[i], p = this.passports[i];
+    const head = p ? p.rows : [["Мощность", r[2]], ["Отапливаемая площадь", r[3]], ["Габариты (Ш × В × Г)", r[5] + " × " + r[6] + " × " + r[7] + " мм"], ["Котлов в модуле", String(r[8] - 1) + " шт."]];
+    const tail = [["Топливо", "природный газ по ГОСТ 5542"], ["Режим работы", "автоматический, автономный и дистанционный контроль"], ["Класс защиты корпуса", "IPX4D"], ["Условия эксплуатации", "от +40 до −60 °С, на открытом воздухе (УХЛ1)"], ["Расчётный срок службы", "10 лет"]];
+    return head.concat(tail).map(([k, v]) => ({ k, v }));
+  }
+
+  buildCard(r, i) {
+    const S = 0.078, bw = Math.round(r[5] * S), bh = Math.round(r[6] * S), bd = Math.max(Math.round(r[7] * S), 44), nb = r[8] - 1;
+    const fr = 3, topH = Math.round(bh * 0.15), plH = Math.round(bh * 0.075), dh = bh - topH - plH;
+    const f = (n) => (Math.round(n * 10) / 10) + "px";
+    const part = (x, y, w, h, bg, bdr, rad, sh) => ({ x: f(x), y: f(y), w: f(w), h: f(h), bg: bg || "transparent", bd: bdr || "none", r: rad || "0", sh: sh || "none" });
+    const dot = (x, y) => part(x - 1.6, y - 1.6, 3.2, 3.2, "radial-gradient(circle at 35% 30%, #EEF0F2, #737B84)", "none", "50%", "0 0 0 1px rgba(30,34,40,0.4)");
+    const door = "linear-gradient(155deg, #CBD0D6, #AEB5BE)", edge = "1px solid rgba(35,40,47,0.5)", hi = "inset 0 0 0 1px rgba(255,255,255,0.3)";
+    const dark = "linear-gradient(180deg, #06080A, #1C2127)", plb = "linear-gradient(180deg, #9AA2AB, #7A828B)";
+    const ld = 0.8, u = (bw - 2 * fr) / (ld + nb);
+    const front = [part(fr, fr, bw - 2 * fr, topH - fr - 1, "linear-gradient(180deg, #CFD4DA, #B4BBC3)", edge, "1px", hi)];
+    if (nb >= 2) front.push(part(fr + (ld + 1) * u - 1, fr, 2, topH - fr - 1, "#858D96"));
+    const lw = ld * u - 3, upH = Math.round((dh - 4) * 0.38);
+    front.push(part(fr, topH + 1, lw, upH, door, edge, "1px", hi), part(fr, topH + upH + 4, lw, dh - upH - 5, door, edge, "1px", hi));
+    front.push(dot(fr + lw - 6, topH + 10), dot(fr + lw - 6, topH + upH - 8), dot(fr + lw - 6, topH + upH + 13), dot(fr + lw - 6, topH + dh - 10));
+    const cxs = [];
+    for (let k = 0; k < nb; k++) {
+      const x0 = fr + ld * u + k * u;
+      front.push(part(x0 + 1, topH + 1, u - 4, dh - 2, door, edge, "1px", hi), dot(x0 + 9, topH + 14), dot(x0 + 9, topH + dh / 2), dot(x0 + 9, topH + dh - 14));
+      cxs.push(x0 + u / 2 - bw / 2);
+    }
+    front.push(part(0, bh - plH, bw, plH, plb, edge), part(fr + 6, bh - plH + 4, ld * u - 12, plH - 9, dark, "1px solid rgba(0,0,0,0.5)"));
+    for (let k = 0; k < nb; k++) front.push(part(fr + ld * u + k * u + 6, bh - plH + 4, u - 14, plH - 9, dark, "1px solid rgba(0,0,0,0.5)"));
+    const sideBase = (grille) => {
+      const s = [part(2, 2, bd - 4, topH - 3, "linear-gradient(180deg, #B8BEC6, #9EA6AF)", edge, "1px"), part(2, topH + 1, bd - 4, dh - 2, "linear-gradient(160deg, #B2B9C1, #979FA8)", edge, "1px"), part(0, bh - plH, bd, plH, plb, edge)];
+      if (grille) { s.push(part(bd * 0.28 - 3, topH + 18, bd * 0.44 + 6, 44, "#A4ABB4", "1px solid rgba(35,40,47,0.55)", "1px")); for (let q = 0; q < 7; q++) s.push(part(bd * 0.28, topH + 22 + q * 5.6, bd * 0.44, 2.2, "#4E565F")); }
+      return s;
+    };
+    const back = [part(2, 2, bw - 4, topH - 3, "linear-gradient(180deg, #AEB5BD, #959DA6)", edge, "1px"), part(2, topH + 1, bw - 4, dh - 2, "linear-gradient(160deg, #A9B0B8, #8E969F)", edge, "1px"), part(0, bh - plH, bw, plH, plb, edge)];
+    const roof = nb >= 2 ? [part(fr + (ld + 1) * u - 1, 0, 2, bd, "#858D96")] : [];
+    const faces = [
+      { tf: "translate(-50%, -50%) translateZ(" + bd / 2 + "px)", w: f(bw), h: f(bh), bg: "linear-gradient(160deg, #A9B0B9, #8B939C)", parts: front },
+      { tf: "translate(-50%, -50%) rotateY(180deg) translateZ(" + bd / 2 + "px)", w: f(bw), h: f(bh), bg: "#8E969F", parts: back },
+      { tf: "translate(-50%, -50%) rotateY(90deg) translateZ(" + bw / 2 + "px)", w: f(bd), h: f(bh), bg: "#8A929B", parts: sideBase(true) },
+      { tf: "translate(-50%, -50%) rotateY(-90deg) translateZ(" + bw / 2 + "px)", w: f(bd), h: f(bh), bg: "#8A929B", parts: sideBase(false) },
+      { tf: "translate(-50%, -50%) rotateX(90deg) translateZ(" + bh / 2 + "px)", w: f(bw), h: f(bd), bg: "linear-gradient(180deg, #D6DBE0, #BCC2C9)", parts: roof },
+      { tf: "translate(-50%, -50%) rotateX(-90deg) translateZ(" + bh / 2 + "px)", w: f(bw), h: f(bd), bg: "#6E767F", parts: [] }
+    ];
+    const tubes = [], N = 18, mk = (cx, cz, yc, rad, h, bg, bfv) => {
+      const w = 2 * rad * Math.tan(Math.PI / N) + 0.7;
+      for (let k = 0; k < N; k++) tubes.push({ tf: "translate3d(" + f(cx) + "," + f(yc) + "," + f(cz) + ") rotateY(" + (k * 360 / N) + "deg) translateZ(" + f(rad) + ") translate(-50%, -50%)", w: f(w), h: f(h), bg, bfv: "hidden", r: "0" });
+    };
+    const pipeBg = "linear-gradient(90deg, #0A0C0F 0%, #1C2025 50%, #0A0C0F 100%)";
+    const collarBg = "linear-gradient(90deg, #A9AFB6 0%, #E6E9EC 50%, #A9AFB6 100%)";
+    const th = Math.max(Math.round(bh * 0.26), 28), ch = 6, pr = 5, cr = 9;
+    cxs.forEach((cx) => {
+      const cz = -bd * 0.08, y0 = -bh / 2;
+      mk(cx, cz, y0 - ch / 2, cr, ch, collarBg);
+      mk(cx, cz, y0 - ch - 1, cr * 1.12, 2.4, "linear-gradient(90deg, #6F767E, #EEF0F2 40%, #9AA1A8)");
+      mk(cx, cz, y0 - th / 2 - ch + 1, pr, th, pipeBg);
+      mk(cx, cz, y0 - th - ch + 1 + 1, pr * 1.18, 3, "linear-gradient(90deg, #2A2F35, #8A929A 42%, #1A1D21)");
+      tubes.push({ tf: "translate3d(" + f(cx) + "," + f(y0 - th - ch - 1) + "," + f(cz) + ") rotateX(90deg) translate(-50%, -50%)", w: f(pr * 2.2), h: f(pr * 2.2), bg: "radial-gradient(circle, #040506 0 52%, #2B3036 58%, #A9B0B7 100%)", bfv: "visible", r: "50%" });
+    });
+    return {
+      name: r[0], desc: r[1], power: r[2], area: r[3], price: r[4],
+      dimW: r[5] + " мм", dimH: r[6] + " мм", dimD: r[7] + " мм",
+      dimsFull: "Ш " + r[5] + " × В " + r[6] + " × Г " + r[7] + " мм",
+      bwPx: f(bw), bhPx: f(bh), shW: f(bw * 1.2 + bd * 0.4), faces, tubes,
+      borderColor: "rgba(255,255,255,0.1)",
+      toggle: () => this.setState({ openCard: i })
+    };
+  }
+
+  catalogData = [
+    ["МТУ 10–40", "МТУ для индивидуального жилого строения, бань, теплиц, гаражей, гостевых домов и т. д.", "10–40 кВт", "до 400 м²", "от 301 162 ₽", 1200, 2250, 1000, 2],
+    ["МТУ 40–50", "Для складов, производственных и административных зданий, жилых многоквартирных зданий, коммунально-складских, гостиниц, магазинов, автосервисов, спортивных и иных сооружений", "40–50 кВт", "до 500 м²", "от 668 326 ₽", 1800, 2250, 1000, 3],
+    ["МТУ 60–120", "Для складов, производственных и административных зданий, жилых многоквартирных зданий, коммунально-складских, гостиниц, магазинов, автосервисов, спортивных и иных сооружений", "60–120 кВт", "от 501 до 1 200 м²", "от 857 980 ₽", 1800, 2000, 450, 3],
+    ["МТУ 150–180", "Для складов, производственных и административных зданий, жилых многоквартирных зданий, коммунально-складских, гостиниц, магазинов, автосервисов, спортивных и иных сооружений", "150–180 кВт", "от 1 201 до 1 800 м²", "от 1 683 060 ₽", 1800, 2250, 1000, 3],
+    ["МТУ 210–270", "Для складов, производственных и административных зданий, жилых многоквартирных зданий, коммунально-складских, гостиниц, магазинов, автосервисов, спортивных и иных сооружений", "210–270 кВт", "от 1 801 до 2 700 м²", "от 1 936 542 ₽", 2500, 2250, 1000, 4],
+    ["МТУ 300–350", "Для складов, производственных и административных зданий, жилых многоквартирных зданий, коммунально-складских, гостиниц, магазинов, автосервисов, спортивных и иных сооружений", "300–350 кВт", "от 2 701 до 5 000 м²", "от 2 689 785 ₽", 3200, 2250, 850, 4]
+  ];
+
+  baseKitData = [
+    "Утепленный модуль с тремя отсеками (газовый, котловой, электрический) с защитой от взлома.",
+    "Один или несколько газовых настенных котлов (в зависимости от мощности) с модуляцией пламени и двухступенчатой защитой от замерзания.",
+    "Счетчик газа отечественного производства.",
+    "Газовый фильтр с магнитным сепаратором.",
+    "Система дымоудаления на базе коаксиального дымохода с системой антиобледенения.",
+    "Система отопления модуля с термостатом, с возможностью регулирования температуры.",
+    "Система контроля загазованности с предохранительным отсечным клапаном.",
+    "Система вентиляции модуля с термостатом, с возможностью регулирования температуры.",
+    "Розеточная сеть.",
+    "Индивидуальное освещение каждого отсека."
+  ];
+
+  techData = [
+    ["Схема теплоснабжения", "Зависимая, двухтрубная с регулированием температуры теплоносителя в зависимости от температуры наружного воздуха."],
+    ["Циркуляция воды", "В котловом контуре осуществляется за счет насоса котла, также могут быть использованы дополнительные циркуляционные насосы."],
+    ["Система автоматики осуществляет розжиг котлов", "А также осуществляет отключение котла при выходе параметров за установленные допустимые границы."],
+    ["Автоматизация", "Может быть выполнена на базе отопительного контроллера Zont, с расширительным модулем OpenTherm."],
+    ["Электропитание контроллера", "Дополнительно может быть выполнено через источник бесперебойного питания."],
+    ["Предохранительный клапан", "На котловом контуре предусматривается, защищающий от повышения давления."]
+  ];
+
+  res(id, fallback) {
+    return (window.__resources && window.__resources[id]) || fallback;
+  }
+
+  photo(n) {
+    const O = (s) => s.split(" ").map(x => "assets/objects/" + x + ".jpg");
+    const H = O("o1-1 o21-1 o29-1 o1-2 o1-3 o24-1"), IND = O("o3-1 o6-1 o11-1 o2-1 o12-1 o19-1 o20-1"), WH = O("o9-1 o18-1 o25-1 o8-2 o28-1 o16-1"),
+      SH = O("o14-1 o13-1 o17-1 o10-1 o13-2 o14-2"), GH = O("o31-1 o31-2 o31-3 o31-4"), RENT = O("o16-1 o16-2 o16-3 o8-1 o9-2"),
+      DOC = O("o2-4 o7-1 o25-1 o18-1 o1-5 o3-1"), MIX = O("o2-1 o9-1 o6-1 o18-1 o1-1 o25-1");
+    const POOL = { catalog: O("o9-1 o1-1 o3-1 o14-1 o25-1 o6-1"), "mtu-15-40": H, "model-40": H, house: H, village: O("o1-1 o26-1 o1-3 o21-1 o4-1 o24-1"),
+      developer: O("o4-1 o4-4 o7-4 o3-3 o6-4 o5-1"), "mtu-40-120": SH.slice(0, 3).concat(WH.slice(0, 3)), "model-card": SH, "model-120": O("o9-1 o5-1 o25-1 o2-1 o18-1 o8-2"),
+      "mtu-150-350": IND, "model-350": IND, industry: IND, warehouse: WH, greenhouse: GH, construction: RENT, designers: DOC,
+      rent: RENT, "rent-build": RENT, "rent-emergency": RENT, "rent-buyout": RENT, "blog-bmk": DOC, "blog-itp": IND, "blog-guide": DOC, "blog-classification": O("o7-1 o2-1 o9-1 o6-1 o3-1 o18-1"), "blog-norms": DOC,
+      cases: MIX, case: MIX, about: O("o6-1 o2-1 o18-1 o3-1 o9-1 o1-1"), certs: DOC, faq: MIX, contacts: MIX };
+    const pg = (this.state.pages || [])[this.state.i];
+    const list = POOL[pg && pg.key] || MIX;
+    return this.resPath(list[((n % list.length) + list.length) % list.length]);
+  }
+
+  resPath(path) {
+    if (!path) return path;
+    const ids = {
+      "assets/mtu-mark.webp": "rMark",
+      "assets/mtu-mark-app.webp": "rMarkApp",
+      "assets/mtu-unit-open.webp": "rUnitOpen",
+      "assets/mtu-unit-closed.webp": "rUnitClosed",
+      "assets/mtu-hero-open-v2.webp": "rHeroOpen",
+      "assets/mtu-hero-closed-v2.webp": "rHeroClosed",
+      "assets/mtu-logo-full.webp": "rLogo",
+      "assets/cat-hero-1.webp": "rCat1",
+      "assets/cat-hero-2.webp": "rCat2",
+      "assets/cat-hero-3.webp": "rCat3",
+      "assets/cat-hero-4.webp": "rCat4",
+      "assets/about-prod-1.jpg": "rAbout1",
+      "assets/about-prod-2.jpg": "rAbout2",
+      "assets/about-prod-3.jpg": "rAbout3"
+    };
+    const rid = ids[path];
+    return (rid && window.__resources && window.__resources[rid]) || path;
+  }
+
+  unitRef = React.createRef();
+
+  onScroll = () => {
+    const el = this.unitRef.current;
+    if (el) {
+      const r = el.getBoundingClientRect();
+      const p = Math.max(0, Math.min(1, (window.innerHeight * 0.55 - r.top) / (window.innerHeight * 0.7)));
+      if (Math.abs(p - this.state.closeProgress) > 0.01) this.setState({ closeProgress: p });
+    }
+    this.hardMute();
+  };
+
+  hardMute = () => {
+    const v = this.clipEl;
+    if (!v) return;
+    v.muted = true; v.defaultMuted = true; v.volume = 0;
+    if (!v._muteGuard) {
+      v._muteGuard = true;
+      ["volumechange", "play", "playing", "loadeddata", "canplay"].forEach(ev =>
+        v.addEventListener(ev, () => { v.muted = true; v.volume = 0; }));
+    }
+  };
+
+  calcState() {
+    const area = this.state.area;
+    const POWER = [[400, 40, 301162], [500, 50, 668326], [800, 80, 857980], [1200, 120, 1120400], [1800, 180, 1683060], [2700, 270, 1936542], [3500, 350, 2689785]];
+    const tier = POWER.find(r => area <= r[0]) || POWER[POWER.length - 1];
+    const MOUNT = { wall: ["Настенный", 0], ground: ["На фундаменте", 84000], cascade: ["Каскад", 196000] };
+    const BOILER = { mizudo: ["Mizudo", 0], baxi: ["BAXI", 62000], thermex: ["Thermex", 48000], buderus: ["Buderus", 128000] };
+    const COLOR = { graphite: ["Графит", 0, "#2B2F36"], steel: ["Стальной синий", 18000, "#3E5A7A"], light: ["Светло-серый", 0, "#F4F5F7"], terra: ["Терракота", 24000, "#B5523A"] };
+    const base = tier[2];
+    const total = base + MOUNT[this.state.mount][1] + BOILER[this.state.boiler][1] + COLOR[this.state.color][1];
+    const rub = (n) => n.toLocaleString("ru-RU").replace(/\u00A0/g, " ") + " ₽";
+    return { area, power: tier[1], base, total, rub, MOUNT, BOILER, COLOR };
+  }
+
+  calcVals() {
+    const c = this.calcState();
+    const mk = (dict, key, sw) => Object.keys(dict).map(k => {
+      const on = this.state[key] === k, row = dict[k];
+      return {
+        label: row[0],
+        extra: row[1] > 0 ? "+" + c.rub(row[1]) : "",
+        swatch: sw ? row[2] : "",
+        bg: on ? "rgba(227,169,59,0.18)" : "rgba(255,255,255,0.05)",
+        border: on ? "rgba(227,169,59,0.75)" : "rgba(255,255,255,0.14)",
+        color: on ? "#fff" : "rgba(255,255,255,0.75)",
+        pick: () => this.setState({ [key]: k })
+      };
+    });
+    return {
+      area: c.area,
+      areaLabel: c.area.toLocaleString("ru-RU").replace(/\u00A0/g, " ") + " м²",
+      powerLabel: c.power + " кВт",
+      priceLabel: c.rub(c.total),
+      onArea: (e) => this.setState({ area: Number(e.target.value) }),
+      calcGroups: [
+        { title: "Тип монтажа", options: mk(c.MOUNT, "mount", false) },
+        { title: "Котёл", options: mk(c.BOILER, "boiler", false) },
+        { title: "Цвет корпуса", options: mk(c.COLOR, "color", true) }
+      ],
+      priceRows: [
+        { label: "Базовая установка " + c.power + " кВт", value: c.rub(c.base) },
+        { label: "Монтаж: " + c.MOUNT[this.state.mount][0], value: c.MOUNT[this.state.mount][1] ? "+" + c.rub(c.MOUNT[this.state.mount][1]) : "включено" },
+        { label: "Котёл: " + c.BOILER[this.state.boiler][0], value: c.BOILER[this.state.boiler][1] ? "+" + c.rub(c.BOILER[this.state.boiler][1]) : "включено" },
+        { label: "Цвет: " + c.COLOR[this.state.color][0], value: c.COLOR[this.state.color][1] ? "+" + c.rub(c.COLOR[this.state.color][1]) : "включено" }
+      ]
+    };
+  }
+
+  clipRef = (el) => {
+    if (!el || el.dataset.kicked) return;
+    el.dataset.kicked = "1";
+    this.clipEl = el;
+    const r = this.res("rClip", null);
+    if (r && el.src !== r) el.src = r;
+    el.load();
+    el.muted = true;
+    el.playsInline = true;
+    const kick = () => el.play().catch(() => {});
+    kick();
+    el.addEventListener("canplay", kick);
+    el.addEventListener("loadeddata", kick);
+    setTimeout(kick, 400);
+  };
+
+  ensureMotionFallback() {
+    const check = () => {
+      const t = document.timeline && document.timeline.currentTime;
+      if (t) return;
+      if (document.getElementById("__motion-fallback")) return;
+      const st = document.createElement("style");
+      st.id = "__motion-fallback";
+      st.textContent = "*{transition:none!important;animation:none!important}";
+      document.head.appendChild(st);
+      document.querySelectorAll('[style*="animation"]').forEach((el) => {
+        const s = el.getAttribute("style") || "";
+        if (/opacity:\s*0(\D|$)/.test(s)) el.style.opacity = "1";
+        if (/transform:\s*translate|scale/.test(s)) el.style.transform = "none";
+      });
+    };
+    setTimeout(check, 900);
+    setTimeout(check, 2500);
+  }
+
+  componentDidMount() {
+    this.ensureMotionFallback();
+    const U = window.MTUUI;
+    if (U && !this.props.embedded) {
+      U.nav = (key, fromHist, top) => {
+        if (!key) { const u = new URL(encodeURI("index.html"), window.location.href).href; try { window.location.assign(u); } catch (er) { window.open(u, "_self"); } return; }
+        const idx = (this.state.pages || []).findIndex(p => p.key === key);
+        if (idx >= 0) this.goTo(idx);
+      };
+    }
+    const grab = () => {
+      if (window.MTU_PAGES) {
+        const pages = window.MTU_PAGES;
+        const k = this.props.startKey;
+        const idx = k ? pages.findIndex(p => p.key === k) : -1;
+        this.setState({ pages, i: idx >= 0 ? idx : this.state.i });
+      }
+      else setTimeout(grab, 60);
+    };
+    grab();
+    window.addEventListener("scroll", this.onScroll, { passive: true });
+    this.onScroll();
+  }
+
+  componentDidUpdate(prevProps) {
+    this.hardMute();
+    const k = this.props.startKey;
+    if (k && prevProps.startKey !== k && this.state.pages) {
+      const idx = this.state.pages.findIndex(p => p.key === k);
+      if (idx >= 0 && idx !== this.state.i) this.goTo(idx);
+    }
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.onScroll);
+    clearInterval(this._objT);
+  }
+
+  rnode(t) {
+    const s = String(t == null ? "" : t);
+    if (s.indexOf("[[") < 0) return s;
+    const parts = s.split(/(\[\[.*?\]\])/).filter(Boolean);
+    return React.createElement(React.Fragment, null, ...parts.map((x, i) => /^\[\[/.test(x) ? React.createElement("span", { key: i, style: { color: "#FF3B30", fontWeight: 700 } }, x.slice(2, -2)) : x));
+  }
+
+  rnode(t) {
+    const s = String(t == null ? "" : t);
+    if (s.indexOf("[[") < 0) return s;
+    const parts = s.split(/(\[\[.*?\]\])/).filter(Boolean);
+    return React.createElement(React.Fragment, null, ...parts.map((x, i) => /^\[\[/.test(x) ? React.createElement("span", { key: i, style: { color: "#FF3B30", fontWeight: 700 } }, x.slice(2, -2)) : x));
+  }
+
+  goTo = (i) => {
+    this.setState({ i, open: {}, menuOpen: false });
+    const pages = this.state.pages;
+    const p = pages && pages[i];
+    if (p) document.title = p.metaTitle || (p.h1 + " | ГК МТУ");
+    if (p && window.MTUUI) window.MTUUI.push(p.key);
+    try { window.scrollTo({ top: 0, behavior: "smooth" }); } catch (err) { window.scrollTo(0, 0); }
+  };
+
+  openDoc = (id, title) => {
+    const el = document.getElementById(id);
+    const img = el && el.shadowRoot && el.shadowRoot.querySelector(".frame img");
+    const src = img && img.getAttribute("src");
+    this.setState({ docSrc: src || "", docTitle: title || "", docMissing: !src });
+  };
+
+  closeDoc = () => this.setState({ docSrc: null, docMissing: false });
+
+  swipe(go) {
+    return {
+      tStart: (e) => { this._tx = e.touches && e.touches[0] ? e.touches[0].clientX : null; },
+      tEnd: (e) => { if (this._tx == null) return; const t = e.changedTouches && e.changedTouches[0]; const dx = t ? t.clientX - this._tx : 0; this._tx = null; if (Math.abs(dx) > 40) go(dx < 0 ? 1 : -1); }
+    };
+  }
+
+  renderVals() { return Object.assign(this.mainVals(), this.hdrVals()); }
+  hdrVals() {
+    const s = this.state, ch = s.ch;
+    const chans = [["tg", "Telegram"], ["wa", "WhatsApp"], ["mail", "E-mail"]].map(([k, l]) => ({ label: l, pick: () => this.setState({ ch: k }), bg: ch === k ? "rgba(227,169,59,0.2)" : "rgba(255,255,255,0.06)", color: ch === k ? "#E3A93B" : "rgba(255,255,255,0.8)" }));
+    const ask = (q) => {
+      const t = q.toLowerCase();
+      let r = "Передал вопрос инженеру. Оставьте телефон через кнопку «Написать» вверху страницы — перезвоним и рассчитаем решение под объект.";
+      if (/аренд|выкуп/.test(t)) r = "Аренда: подача установки за 1 день, платежи по желанию идут в зачёт стоимости при выкупе. Опишите объект — рассчитаем.";
+      else if (/срок|когда|быстр/.test(t)) r = "Подача в аренду — 1 день. Новая установка: от заявки до пуска 14–60 дней, для дома монтаж занимает 1 день.";
+      else if (/мощност|площад|подбор|подобр/.test(t)) r = "Мощность подбираем по площади, высоте и режиму работы: до 350 кВт и каскады. Напишите тип и площадь объекта.";
+      else if (/документ|сертиф|патент/.test(t)) r = "Есть полный пакет: сертификаты ТР ТС, паспорта, патент на полезную модель.";
+      this.setState(st => ({ chatLog: st.chatLog.concat([{ mine: true, text: q }, { mine: false, text: r }]), chatText: "" }), () => { const el = document.querySelector("[data-chat-log]"); if (el) el.scrollTop = el.scrollHeight; });
+    };
+    return {
+      contactOpen: s.contactOpen, chans, cMsg: s.cMsg, cContact: s.cContact,
+      sendLabel: ch === "mail" ? "Написать на e-mail" : ch === "wa" ? "Открыть WhatsApp" : "Открыть Telegram",
+      toggleContact: () => this.setState(x => ({ contactOpen: !x.contactOpen })),
+      onCMsg: (e) => this.setState({ cMsg: e.target.value }),
+      onCContact: (e) => this.setState({ cContact: e.target.value }),
+      sendContact: () => {
+        const t = encodeURIComponent((s.cMsg || "Здравствуйте! Хочу обсудить объект.") + (s.cContact ? "\nМои контакты: " + s.cContact : ""));
+        const url = ch === "tg" ? "https://t.me/gkmtu_bot?text=" + t : ch === "wa" ? "https://wa.me/79167656565?text=" + t : "mailto:info@gkmtu.ru?subject=" + encodeURIComponent("Заявка с сайта") + "&body=" + t;
+        if (ch === "mail") window.location.href = url; else window.open(url, "_blank");
+        this.setState({ contactOpen: false });
+      },
+      chatOpen: s.chatOpen, chatClosed: !s.chatOpen, chatText: s.chatText,
+      openChat: () => this.setState({ chatOpen: true }), closeChat: () => this.setState({ chatOpen: false }),
+      chatLog: s.chatLog.map(m => ({ text: m.text, align: m.mine ? "flex-end" : "flex-start", bg: m.mine ? "#E3A93B" : "rgba(255,255,255,0.08)", color: m.mine ? "#22262C" : "#F4F5F7" })),
+      chatChips: ["Подобрать мощность", "Аренда", "Сроки", "Документы"].map(l => ({ label: l, ask: () => ask(l) })),
+      onChatText: (e) => this.setState({ chatText: e.target.value }),
+      chatSubmit: (e) => { e.preventDefault(); const q = (s.chatText || "").trim(); if (q) ask(q); }
+    };
+  }
+  mainVals() {
+    const pages = this.state.pages;
+    if (!pages) return Object.assign(this.calcVals(), this.catalogVals(), { isCatalog: false, shotA: "shot-a", shotB: "shot-b", shotC: "shot-c", unitRef: this.unitRef, clipRef: this.clipRef, openOpacity: "1", closedOpacity: "0" }, { heroDefault: true, heroLight: false, heroPhoto: false, heroSteel: false, heroTerra: false, crumb: "Загрузка", eyebrow: "ГК «МТУ»", h1: "", sub: "", ctaNote: "", blocks: [], seo: [], topNav: [], menuGroups: [], toggleMenu: () => {}, menuDisplay: "none", hasStats: false, stats: [], primaryCtas: [], secondaryCtas: [], finalTitle: "", finalText: "", finalCta: "", finalSecondary: "" });
+
+    const cur = (pages[this.state.i].key === "case" && this.state.caseId && window.MTU_CASE_FOR && window.MTU_CASE_FOR(this.state.caseId)) || pages[this.state.i];
+    const groups = [];
+    pages.forEach((p, idx) => {
+      if (p.key === "case") return;
+      let g = groups.find(x => x.title === p.group);
+      if (!g) { g = { title: p.group, items: [] }; groups.push(g); }
+      g.items.push({ title: p.nav, go: () => this.goTo(idx), color: idx === this.state.i ? "#E3A93B" : "rgba(255,255,255,0.75)" });
+    });
+
+    const noteFor = (p) => {
+      if (p.group === "Каталог") return p.key === "catalog" ? "обзор каталога" : (/^model/.test(p.key) ? "карточка модели" : "диапазон мощности");
+      if (p.group === "Аренда") return p.key === "rent" ? "обзор аренды" : "ветка аренды";
+      if (p.group === "Решения") return "решение под объект";
+      if (p.group === "Блог") return "статья";
+      if (p.group === "Объекты") return p.key === "cases" ? "все объекты" : "карточка объекта";
+      return "страница";
+    };
+    const topNav = groups.map(g => {
+      const items = pages.map((p, pi) => ({ p, pi })).filter(x => x.p.group === g.title && x.p.key !== "case");
+      if (!items.length) return null;
+      const single = items.length === 1;
+      const sub = single ? null : items.map(x => ({
+        title: x.p.key === "catalog" ? "Все модели каталога" : (x.p.crumb || x.p.nav),
+        note: noteFor(x.p),
+        color: x.pi === this.state.i ? "#E3A93B" : "rgba(255,255,255,0.86)",
+        go: () => { this.goTo(x.pi); this.setState({ openNav: null }); window.scrollTo({ top: 0, behavior: "smooth" }); if (x.p.key === "catalog") setTimeout(() => { const m = document.getElementById("catalog-models"); if (m) window.scrollTo({ top: Math.max(0, m.getBoundingClientRect().top + (window.scrollY || 0) - 80), behavior: "smooth" }); }, 150); }
+      }));
+      const k = g.title;
+      const idx = items[0].pi;
+      return {
+        title: g.title,
+        go: () => {
+          this.goTo(idx); this.setState({ openNav: null }); window.scrollTo({ top: 0, behavior: "smooth" });
+        },
+        color: cur.group === g.title ? "#E3A93B" : "rgba(255,255,255,0.8)",
+        sub: sub, hasSub: !!sub,
+        caret: sub ? (this.state.openNav === k ? "rotate(180deg)" : "rotate(0deg)") : "none",
+        dropOpen: !!sub && this.state.openNav === k,
+        onEnter: sub ? () => this.setState({ openNav: k }) : undefined,
+        onLeave: sub ? () => this.setState({ openNav: null }) : undefined
+      };
+    }).filter(Boolean);
+
+    const blocks = (cur.blocks || []).map((b, bi) => {
+      const out = Object.assign({}, b);
+      out.delay = (bi * 0.08).toFixed(2) + "s";
+      out.actionNote = this.rnode(b.actionNote);
+      out.actionNote = this.rnode(b.actionNote);
+      if (b.h2) {
+        const w = b.h2.split(" ");
+        const take = w.length > 4 ? 2 : 1;
+        out.h2head = w.slice(0, w.length - take).join(" ") + " ";
+        out.h2accent = w.slice(w.length - take).join(" ");
+      }
+      if (b.paragraphs) {
+        out.paragraphs = b.paragraphs.map(p => ({
+          text: p.text,
+          parts: String(p.text).split("**").reduce((acc, seg, si) => {
+            const on = si % 2 === 1;
+            seg.split(/(\[\[.*?\]\])/).forEach(x => {
+              if (!x) return;
+              const red = /^\[\[/.test(x);
+              acc.push({ text: red ? x.slice(2, -2) : x, color: red ? "#FF3B30" : (on ? "#fff" : "inherit"), weight: red ? "700" : (on ? "600" : "400") });
+            });
+            return acc;
+          }, [])
+        }));
+      }
+      if (b.isStepper) {
+        const tone = ["#E3A93B", "#C1904A", "#3E5A7A", "#6B6B7E", "#94604C", "#B5523A"];
+        out.stages = b.stages.map((s, i) => Object.assign({}, s, {
+          accent: tone[i % tone.length],
+          isLastStage: i === b.stages.length - 1,
+          isNote: s.kind === "note", isMap: s.kind === "map", isPath: s.kind === "path",
+          isDocs: s.kind === "docs", isTrack: s.kind === "track", isResult: s.kind === "result",
+          icClipboard: s.icon === "clipboard", icSearch: s.icon === "search", icBulb: s.icon === "bulb",
+          icLayers: s.icon === "layers", icTruck: s.icon === "truck", icCheck: s.icon === "check",
+          noteRows: (s.note || []).map(r => ({ h: r[0], t: r[1] })),
+          leftNodes: (s.left || []).map(t => ({ t: t })),
+          rightNodes: (s.right || []).map(t => ({ t: t })),
+          pathSteps: (s.path || []).map((t, pi) => ({ t: t, hasArrow: pi < (s.path || []).length - 1 })),
+          docItems: (s.docs || []).map(d => ({ t: d[0], sub: d[1] })),
+          trackRows: (s.track || []).map(r => ({ t: r[0], w: r[1] })),
+          metricRows: (s.metrics || []).map(m => ({ label: m[0], value: m[1], note: m[2] }))
+        }));
+      }
+      if (b.steps) {
+        const tone = ["#E3A93B", "#3E5A7A", "#B5523A"];
+        out.steps = b.steps.map((s, i) => Object.assign({}, s, {
+          accent: tone[i % tone.length],
+          isLast: i === b.steps.length - 1,
+          needLabel: s.need === "—" ? "" : s.need,
+          hasNeed: s.need !== "—",
+          delay: (i * 0.06).toFixed(2) + "s"
+        }));
+        const st = out.steps;
+        const cut = [[0, 2], [2, 3], [3, st.length]];
+        const meta = [
+          { title: "Считаем и договариваемся", badge: "Этап сделки", status: "До подписания", accent: "#E3A93B", ink: "#EDBE63", edgeA: "rgba(227,169,59,0.85)", edgeB: "rgba(62,90,122,0.15)" },
+          { title: "Делаем установку", badge: "Этап производства", status: "На нашей стороне", accent: "#3E5A7A", ink: "#93AFD1", edgeA: "rgba(120,160,205,0.8)", edgeB: "rgba(227,169,59,0.15)" },
+          { title: "Ставим и подаём тепло", badge: "Этап на объекте", status: "С вашим участием", accent: "#B5523A", ink: "#E79878", edgeA: "rgba(181,82,58,0.85)", edgeB: "rgba(227,169,59,0.18)" }
+        ];
+        const mkLines = (m) => {
+          const arr = [];
+          const dur = [5.5, 6.7, 6.9, 8.9, 8.3, 9.7, 11.1, 13.1, 7.5];
+          const wid = [0.5, 0.6, 0.78, 0.45, 1.06, 0.5];
+          const ops = [0.2, 0.3, 0.52, 0.3, 0.38, 0.25, 0.56, 0.43, 0.61, 0.47, 0.34, 0.29];
+          for (let i = 0; i < 22; i++) {
+            const kind = i % 6;
+            arr.push({
+              dy: (-7.1 + i * 0.66).toFixed(2),
+              stroke: kind === 1 ? "#B5523A" : (kind === 3 ? "#FFFFFF" : m.ink),
+              op: kind === 1 ? "0.3" : (kind === 3 ? "0.3" : ops[i % ops.length].toFixed(2)),
+              w: wid[kind],
+              anim: "cWeave" + (i % 4) + " " + dur[i % dur.length].toFixed(1) + "s ease-in-out " + (i * 0.37).toFixed(2) + "s infinite",
+              dash: "none",
+              flow: "none"
+            });
+          }
+          return arr;
+        };
+        out.phases = cut.map((c, pi) => Object.assign({}, meta[pi], {
+          lines: mkLines(meta[pi]),
+          span: pi === 2 ? "1 / -1" : "auto",
+          stepCols: pi === 2 ? "repeat(3, minmax(0, 1fr))" : "minmax(0, 1fr)",
+          steps: st.slice(c[0], c[1]),
+          count: c[1] - c[0] === 1 ? "один шаг" : (c[1] - c[0]) + " шага",
+          hasLink: pi === 0,
+          linkDelay: (0.3 + pi * 0.25).toFixed(2) + "s"
+        }));
+      }
+      if (b.items) {
+        out.items = b.items.map((it, ii) => ({
+          text: this.rnode(String(it.text).split("**").join("")),
+          tick: ii % 2 === 0 ? "#E3A93B" : "#B5523A",
+          parts: String(it.text).split("**").reduce((acc, seg, si) => {
+            const on = si % 2 === 1;
+            seg.split(/(\[\[.*?\]\])/).forEach(x => { if (!x) return; const red = /^\[\[/.test(x); acc.push({ text: red ? x.slice(2, -2) : x, color: red ? "#FF3B30" : (on ? "#fff" : "inherit"), weight: red ? "700" : (on ? "600" : "400") }); });
+            return acc;
+          }, [])
+        }));
+      }
+      if (b.cols) {
+        let mtuCol = b.cols.findIndex(c => /МТУ|наружного размещения/i.test(String(c.text)));
+        if (mtuCol < 1 && b.cols.length === 2) mtuCol = 1;
+        const cmp = b.cols.length >= 2 && (mtuCol > 0 || !!b.hlAll || b.cols.length === 2);
+        out.cols = b.cols.map((c, ci) => Object.assign({}, c, {
+          color: cmp && (ci === mtuCol || (b.hlAll && ci > 0)) ? "#E3A93B" : "rgba(255,255,255,0.45)"
+        }));
+      }
+      if (b.rows) {
+        const tone = ["#E3A93B", "#C1904A", "#3E5A7A", "#6B6B7E", "#94604C", "#B5523A"];
+        const isNum = (t) => /^[^A-Za-zА-Яа-я]*\d[\d\s.,×x/–—-]*(кВт|м²|м³|мм|м|ч|%|₽|руб\.?|мес\.?|дн\.?|л|кг|бар)?\.?$/.test(String(t).trim());
+        const nc = (b.cols || []).length;
+        let mtuCol = (b.cols || []).findIndex(c => /МТУ|наружного размещения/i.test(String(c.text)));
+        if (mtuCol < 1 && nc === 2) mtuCol = 1;
+        const cmp = nc >= 2 && (mtuCol > 0 || !!b.hlAll);
+        const alt = ["rgba(62,90,122,0.14)", "rgba(148,96,76,0.12)", "rgba(107,107,126,0.12)"];
+        let ai = 0;
+        const tints = (b.cols || []).map((c, ci) => !cmp || ci === 0 ? "transparent"
+          : ((ci === mtuCol || (b.hlAll && ci > 0)) ? "rgba(227,169,59,0.10)" : alt[ai++ % alt.length]));
+        out.rows = b.rows.map((r, ri) => ({
+          accent: tone[ri % tone.length],
+          cells: r.cells.map((c, ci) => {
+            const li = c.linkKey ? (pages || []).findIndex(p => p.key === c.linkKey) : -1;
+            const num = isNum(c.text);
+            const own = cmp && (ci === mtuCol || (b.hlAll && ci > 0));
+            const red = /\[\[/.test(String(c.text));
+            const tint = tints[ci] || "transparent";
+            return {
+              text: String(c.text).replace(/\[\[|\]\]/g, ""),
+              bg: tint,
+              edge: own ? "inset 2px 0 0 rgba(227,169,59,0.55)" : "none",
+              size: ci === 0 ? "17px" : "16px",
+              font: num ? "'IBM Plex Sans', sans-serif" : "inherit",
+              weight: red ? "700" : (ci === 0 || li >= 0 || num ? "600" : "400"),
+              color: red ? "#FF3B30" : li >= 0 ? "#E3A93B" : (ci === 0 ? "#fff" : (own || !cmp ? "rgba(255,255,255,0.82)" : "rgba(255,255,255,0.62)")),
+              cursor: li >= 0 ? "pointer" : "default",
+              go: li >= 0 ? () => { this.goTo(li); window.scrollTo({ top: 0, behavior: "smooth" }); } : undefined
+            };
+          })
+        }));
+      }
+      if (b.isGallery) {
+        const pk2 = pages[this.state.i].key === "case" && this.state.caseId ? "case-o" + this.state.caseId : pages[this.state.i].key;
+        const n = b.count || 4;
+        const gkey = pk2 + ":gal:" + bi;
+        const man = this.state.galSlide && this.state.galSlide[gkey];
+        const gcur = typeof man === "number" ? man : 0;
+        const gGo = (d) => this.setState(st => ({ galSlide: Object.assign({}, st.galSlide, { [gkey]: (gcur + d + n) % n }) }));
+        out.gPrev = (e) => { if (e && e.preventDefault) e.preventDefault(); gGo(-1); };
+        out.gNext = (e) => { if (e && e.preventDefault) e.preventDefault(); gGo(1); };
+        Object.assign(out, this.swipe(gGo));
+        out.frames = Array.from({ length: n }, (_, k) => ({ id: pk2 + "-gal-" + bi + "-" + k, ph: b.framePh || "Фото установки", src: this.resPath((b.frameSrcs && b.frameSrcs[k]) || "") || this.photo(k) }));
+        out.gShift = "translateX(-" + (gcur * 100) + "%)";
+        out.gDots = Array.from({ length: n }, (_, k) => ({
+          bg: k === gcur ? "#E3A93B" : "rgba(255,255,255,0.3)",
+          pick: (e) => { if (e && e.preventDefault) e.preventDefault(); this.setState(st => ({ galSlide: Object.assign({}, st.galSlide, { [gkey]: k }) })); }
+        }));
+        out.detailA = pk2 + "-gal-" + bi + "-dA";
+        out.detailASrc = this.photo(bi + 1);
+        out.detailBSrc = this.photo(bi + 5);
+        out.detailB = pk2 + "-gal-" + bi + "-dB";
+      }
+      const THEME = { "greenhouse-photo": "assets/objects/o31-1.jpg" };
+      const ROWS = { "house-gas": ["o29-1", "o30-1", "o27-1"], "village-schedule": ["o26-1", "o24-1", "o1-1"], "industry-risk": ["o28-1", "o11-1", "o14-1"], "greenhouse-area": ["o31-1", "o31-2", "o31-3"], "warehouse-scale": ["o18-1", "o18-2", "o9-1"] };
+      if (b.isPhotoRow) {
+        const rs = ROWS[b.slotId] || ["o1-1", "o18-2", "o11-1"], lb = ["Фото: объект", "Фото: установка", "Фото: монтаж"];
+        out.rowPhotos = rs.map((r, k) => ({ id: b.slotId ? b.slotId + "-row-" + (k + 1) : "cases-photo-" + (k + 1), src: "assets/objects/" + r + ".jpg", label: ROWS[b.slotId] ? lb[k] : ["Фото: дом", "Фото: склад", "Фото: производство"][k] }));
+      }
+      out.photoSrc = THEME[b.slotId] || b.photoSrc || this.photo(bi + 2);
+      if (b.isMediaRow) {
+        const pk3 = pages[this.state.i].key;
+        out.mediaA = pk3 + "-media-" + bi + "-a";
+        out.mediaASrc = this.photo(bi);
+        out.mediaBSrc = this.photo(bi + 3);
+        out.mediaB = pk3 + "-media-" + bi + "-b";
+        out.mediaACap = b.mediaACap || "Монтаж и подключение установки";
+        out.mediaBCap = b.mediaBCap || "Как работает МТУ: газ, котёл, автоматика";
+      }
+      if (b.objects) {
+        const tick = this.state.objTick || 0;
+        const pk = pages[this.state.i].key;
+        const pfx = pk === "cases" ? "" : pk + "-";
+        const fl = this.state.objF || {};
+        const band = (kw) => kw <= 0 ? "" : kw <= 50 ? "до 50 кВт" : kw <= 150 ? "50–150 кВт" : kw <= 350 ? "150–350 кВт" : "свыше 350 кВт";
+        const optsOf = (arr, cu, any) => [{ v: "", t: any, sel: !cu }].concat(arr.map(v => ({ v: v, t: v, sel: v === cu })));
+        const uniq = (f) => Array.from(new Set(b.objects.map(f).filter(Boolean)));
+        const bands = uniq(o => band(o.kw));
+        out.fPower = optsOf(["до 50 кВт", "50–150 кВт", "150–350 кВт", "свыше 350 кВт"].filter(x => bands.indexOf(x) >= 0), fl.power || "", "Любая мощность");
+        const typeOrder = ["Частный дом", "Образовательные", "Рестораны и кафе", "СТО", "Магазины", "Церкви", "Коммерция", "Склад", "Производство", "Баня и СПА", "Аренда"];
+        const types = uniq(o => o.type);
+        out.fType = optsOf(typeOrder.filter(x => types.indexOf(x) >= 0).concat(types.filter(x => typeOrder.indexOf(x) < 0)), fl.type || "", "Любой тип");
+        const fuels = uniq(o => o.fuel);
+        out.fFuel = optsOf(["Магистральный газ", "Газгольдер"].filter(x => fuels.indexOf(x) >= 0), fl.fuel || "", "Любой");
+        const setF = (k) => (e) => { const v = e && e.target ? e.target.value : ""; this.setState(st => ({ objF: Object.assign({}, st.objF, { [k]: v }) })); };
+        out.onFPower = setF("power"); out.onFType = setF("type"); out.onFFuel = setF("fuel");
+        const shown = b.objects.filter(o => (!fl.power || band(o.kw) === fl.power) && (!fl.type || o.type === fl.type) && (!fl.fuel || o.fuel === fl.fuel));
+        out.objCount = "Показано объектов: " + shown.length + " из " + b.objects.length;
+        out.objects = shown.map((o, oi) => {
+          const key = pfx + "obj:" + (o.id || oi);
+          const manual = this.state.objSlide && this.state.objSlide[key];
+          const cnt = o.n || 3;
+          const cur = typeof manual === "number" && manual < cnt ? manual : 0;
+          const oGo = (d) => this.setState(st => ({ objSlide: Object.assign({}, st.objSlide, { [key]: (cur + d + cnt) % cnt }) }));
+          const sw = this.swipe(oGo);
+          const shots = Array.from({ length: cnt }, (_, n) => o.n ? { id: "case-o" + o.id + "-" + (n + 1), src: "assets/objects/o" + o.id + "-" + (n + 1) + ".jpg", ph: o.name } : { id: pfx + "obj-" + oi + "-" + n, ph: o.name });
+          return Object.assign({}, o, {
+            tStart: sw.tStart, tEnd: sw.tEnd,
+            prev: (e) => { if (e && e.preventDefault) e.preventDefault(); oGo(-1); },
+            next: (e) => { if (e && e.preventDefault) e.preventDefault(); oGo(1); },
+            shots: shots,
+            shift: "translateX(-" + (cur * 100) + "%)",
+            dots: shots.map((_, n) => ({
+              bg: n === cur ? "#E3A93B" : "rgba(255,255,255,0.35)",
+              pick: (e) => { if (e && e.preventDefault) e.preventDefault(); this.setState(st => ({ objSlide: Object.assign({}, st.objSlide, { [key]: n }) })); }
+            })),
+            open: (e) => {
+              if (e && e.preventDefault) e.preventDefault();
+              const idx = (this.state.pages || []).findIndex(p => p.key === "case");
+              if (idx >= 0) {
+                this.setState({ caseId: o.id });
+                this.goTo(idx);
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }
+            }
+          });
+        });
+      }
+      if (b.docs) out.docs = b.docs.map(d => Object.assign({}, d, {
+        title: d.title || d.ph,
+        open: () => this.openDoc(d.id, d.title || d.ph)
+      }));
+      if (b.faqRaw) out.faq = b.faqRaw.map(([q, a], qi) => {
+        const key = bi + ":" + qi;
+        const open = !!this.state.open[key];
+        return { q, a: this.rnode(a), open, sign: open ? "−" : "+", toggle: () => this.setState(s => ({ open: Object.assign({}, s.open, { [key]: !s.open[key] }) })) };
+      });
+      return out;
+    });
+
+    const variant = { catalog: "light", house: "photo", industry: "steel", rent: "terra" }[cur.key] || "default";
+    const catalogKeys = pages.filter(p => p.group === "Каталог").map(p => p.key);
+    const catIdx = catalogKeys.indexOf(cur.key);
+    const heroShots = [
+      this.res("rCat1", "assets/cat-hero-1.webp"),
+      this.res("rCat2", "assets/cat-hero-2.webp"),
+      this.res("rCat3", "assets/cat-hero-3.webp"),
+      this.res("rCat4", "assets/cat-hero-4.webp")
+    ];
+    const heroBgUrl = catIdx >= 0 ? heroShots[catIdx % heroShots.length] : null;
+
+    const cp = this.state.closeProgress;
+    return Object.assign(this.calcVals(), this.catalogVals(), {
+      isCatalog: cur.key === "catalog",
+      heroSlotId: "hero-photo-" + (cur.key === "case" && this.state.caseId ? "case-o" + this.state.caseId : cur.key),
+      heroSlotSrc: cur.key === "case" && this.state.caseId ? this.resPath("assets/objects/o" + this.state.caseId + "-1.jpg") : this.photo(0),
+      shotASrc: this.photo(0), shotBSrc: this.photo(1), shotCSrc: this.photo(2),
+      objTick: this.state.objTick || 0,
+      unitRef: this.unitRef,
+      clipRef: this.clipRef,
+      openOpacity: String(1 - cp),
+      closedOpacity: String(cp),
+      shotA: cur.key + "-shot-a",
+      shotB: cur.key + "-shot-b",
+      shotC: cur.key + "-shot-c",
+      hasHeroBg: !!heroBgUrl,
+      heroBgImage: heroBgUrl ? "linear-gradient(100deg, #14171B 0%, rgba(20,23,28,0.96) 38%, rgba(20,23,28,0.84) 66%, rgba(20,23,28,0.72) 100%), url('" + heroBgUrl + "')" : "none",
+      heroLight: variant === "light",
+      heroPhoto: variant === "photo",
+      heroSteel: variant === "steel",
+      heroTerra: variant === "terra",
+      heroDefault: variant === "default",
+      crumb: cur.crumb, eyebrow: cur.eyebrow, h1: cur.h1, lead: cur.lead || "", hasLead: !!cur.lead, sub: this.rnode(cur.sub), ctaNote: this.rnode(cur.ctaNote),
+      primaryCtas: (cur.ctas || []).filter(c => c.primary),
+      secondaryCtas: (cur.ctas || []).filter(c => c.secondary),
+      hasStats: !!(cur.stats && cur.stats.length),
+      docOpen: this.state.docSrc != null,
+      docSrc: this.state.docSrc || "",
+      docTitle: this.state.docTitle || "",
+      docHasImage: !!this.state.docSrc,
+      docMissing: !!this.state.docMissing,
+      closeDoc: this.closeDoc,
+      stats: (() => { const anyLong = (cur.stats || []).some(x => String(x.value).length > 13); return (cur.stats || []).map(x => Object.assign({}, x, { isLong: anyLong, isShort: !anyLong })); })(),
+      blocks, seo: cur.seo || [],
+      finalTitle: cur.finalTitle, finalText: this.rnode(cur.finalText), finalCta: cur.finalCta, finalSecondary: cur.finalSecondary,
+      topNav, menuGroups: groups, botHref: "https://t.me/gkmtu_bot",
+      menuDisplay: this.state.menuOpen ? "block" : "none",
+      toggleMenu: () => this.setState(s => ({ menuOpen: !s.menuOpen }))
+    });
+  }
+}
+</script>
+</body>
+</html>
