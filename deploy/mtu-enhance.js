@@ -299,7 +299,22 @@
     ]));
     document.body.appendChild(menuEl); document.body.style.overflow = "hidden";
   }
+  function footerForms() {
+    document.querySelectorAll("footer").forEach(function (f) {
+      if (f.parentNode.querySelector(":scope > [data-mtu-form]") || f.closest("[data-mtu-form]")) return;
+      var sec = el("section", { "data-mtu-form": "1", style: "position:relative;max-width:1180px;margin:0 auto;padding:40px 24px 72px;box-sizing:border-box" });
+      var box = el("div", { style: "max-width:640px;margin:0 auto;padding:36px;border-radius:8px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);box-shadow:0 1px 2px rgba(0,0,0,.25),0 10px 28px -10px rgba(0,0,0,.4);color:#fff;font-family:'IBM Plex Sans',sans-serif" });
+      box.appendChild(el("h3", { style: "margin:0 0 8px;font-size:28px;font-weight:600;letter-spacing:-.02em;color:#fff" }, ["Остались вопросы? Напишите нам"]));
+      box.appendChild(el("p", { html: "Оставьте контакт и коротко опишите задачу — необязательно. " + RESP, style: "margin:0 0 18px;font-size:16px;line-height:1.6;color:rgba(255,255,255,.75)" }));
+      var q = el("textarea", { class: "mtu-in", rows: "3", placeholder: "Что нужно отапливать, какая площадь (по желанию)", style: "min-height:88px;resize:vertical" });
+      box.appendChild(q);
+      contactForm(box, { kind: "footer-form", payload: {}, submit: "Отправить заявку" });
+      sec.appendChild(box);
+      f.parentNode.insertBefore(sec, f);
+    });
+  }
   function render() {
+    footerForms();
     var navs = document.querySelectorAll("nav");
     navs.forEach(function (n) {
       if (n.closest && n.closest(".mtu-menu")) return;

@@ -250,7 +250,7 @@
         </div>
         <div style="minWidth: 0; display: flex; flexDirection: column; gap: 14px;">
           <div style="minWidth: 0; padding: 10px; borderRadius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); boxShadow: 0 1px 2px rgba(0,0,0,0.25), 0 10px 28px -10px rgba(0,0,0,0.4);">
-            <div style="position: relative; minWidth: 0; width: 100%; height: 100%;"><image-slot id="hero-photo-solution" fallback-src="{{ heroSlotSrc }}" shape="rounded" radius="6" style="width: 100%; height: 320px;" placeholder="Фото объекта на первый экран"></image-slot><img class="mtu-wm" src="{{ srcMark }}" alt="" /></div>
+            <div style="position: relative; minWidth: 0; width: 100%; height: 100%;"><image-slot id="{{ heroSlotId }}" fallback-src="{{ heroSlotSrc }}" shape="rounded" radius="6" style="width: 100%; height: 320px;" placeholder="Фото объекта на первый экран"></image-slot><img class="mtu-wm" src="{{ srcMark }}" alt="" /></div>
           </div>
           <sc-if value="{{ hasStats }}" hint-placeholder-val="{{ false }}">
             <div style="display: flex; gap: 12px; flexWrap: wrap;">
@@ -745,7 +745,7 @@
 
       <sc-if value="{{ block.isPhoto }}" hint-placeholder-val="{{ false }}">
         <div style="minWidth: 0; padding: 12px; borderRadius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); boxShadow: 0 1px 2px rgba(0,0,0,0.25), 0 10px 28px -10px rgba(0,0,0,0.4); marginTop: 8px;">
-          <div style="position: relative; minWidth: 0; width: 100%; height: 100%;"><image-slot id="{{ block.slotId }}" fallback-src="{{ block.photoSrc }}" shape="rounded" radius="16" style="width: 100%; height: 360px;" placeholder="Фото объекта"></image-slot><img class="mtu-wm" src="{{ srcMark }}" alt="" /></div>
+          <div style="position: relative; minWidth: 0; width: 100%; height: 100%;"><image-slot id="{{ block.slotId }}" fallback-src="{{ block.photoSrc }}" shape="rounded" radius="16" style="width: 100%; height: auto; aspectRatio: 16 / 9;" placeholder="Фото объекта"></image-slot><img class="mtu-wm" src="{{ srcMark }}" alt="" /></div>
         </div>
       </sc-if>
 
@@ -1234,9 +1234,9 @@ class Component extends DCLogic {
 
   photo(n) {
     const O = (s) => s.split(" ").map(x => "assets/objects/" + x + ".jpg");
-    const H = O("o1-1 o21-1 o29-1 o1-2 o1-3 o24-1"), IND = O("o3-1 o6-1 o11-1 o2-1 o12-1 o19-1 o20-1"), WH = O("o9-1 o18-1 o25-1 o8-2 o28-1 o16-1"),
-      SH = O("o14-1 o13-1 o17-1 o10-1 o13-2 o14-2"), GH = O("o31-1 o31-2 o31-3 o31-4"), RENT = O("o16-1 o16-2 o16-3 o8-1 o9-2"),
-      DOC = O("o2-4 o7-1 o25-1 o18-1 o1-5 o3-1"), MIX = O("o2-1 o9-1 o6-1 o18-1 o1-1 o25-1");
+    const H = O("n-logcabin n-blue-cabinet o1-1 o21-1 o29-1 o1-2 o24-1"), IND = O("n-warehouse88 n-grey-cabinet o3-1 o6-1 o11-1 o2-1 o12-1 o19-1"), WH = O("n-teal-building n-warehouse88 o9-1 o18-1 o25-1 o8-2 o28-1"),
+      SH = O("n-grey-cabinet n-teal-building o14-1 o13-1 o17-1 o10-1 o13-2"), GH = O("n-green-open n-green-side n-green-closeup o31-1 o31-2 o31-3"), RENT = O("n-boilers-front n-green-side o16-1 o16-2 o8-1 o9-2"),
+      DOC = O("n-boilers-close n-green-closeup n-boilers-front o2-4 o7-1 o25-1 o1-5"), MIX = O("n-green-open n-warehouse88 o2-1 o9-1 o6-1 o18-1 o1-1");
     const POOL = { catalog: O("o9-1 o1-1 o3-1 o14-1 o25-1 o6-1"), "mtu-15-40": H, "model-40": H, house: H, village: O("o1-1 o26-1 o1-3 o21-1 o4-1 o24-1"),
       developer: O("o4-1 o4-4 o7-4 o3-3 o6-4 o5-1"), "mtu-40-120": SH.slice(0, 3).concat(WH.slice(0, 3)), "model-card": SH, "model-120": O("o9-1 o5-1 o25-1 o2-1 o18-1 o8-2"),
       "mtu-150-350": IND, "model-350": IND, industry: IND, warehouse: WH, greenhouse: GH, construction: RENT, designers: DOC,
