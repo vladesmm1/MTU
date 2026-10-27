@@ -18,7 +18,8 @@
     "@media (min-width:2300px){body{zoom:1.6}}",
     "@media (min-width:3000px){body{zoom:2.1}}",
     /* планшет / узкий ноутбук */
-    "@media (max-width:1280px){nav{padding:12px 16px!important;gap:12px!important}nav>div:nth-child(2){gap:12px!important}nav>div:nth-child(2) button,nav>div:nth-child(2)>a{font-size:13px!important}nav a[href^='https://wa.me']{display:none!important}nav>a:first-child span{display:none}}",
+    "@media (max-width:1280px){nav{padding:12px 16px!important;gap:12px!important}nav>div:nth-child(2){gap:12px!important}nav>div:nth-child(2) button,nav>div:nth-child(2)>a{font-size:13px!important}nav a[href^='https://wa.me']{display:none!important}nav>a:first-child span{font-size:15px!important;max-width:170px!important;letter-spacing:.02em!important}}",
+    "@media (max-width:1000px){nav>a:first-child span{display:none}}",
     "@media (max-width:1000px){nav [data-nav-links]{display:none!important}[data-burger]{display:inline-flex!important}}",
     "@media (max-width:900px){",
     " section [style*='grid-template-columns']:not([data-keep]):not([data-tbl] *){grid-template-columns:minmax(0,1fr)!important}",

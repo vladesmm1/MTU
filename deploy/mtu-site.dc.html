@@ -110,7 +110,7 @@
   <nav style="position: fixed; top: 56px; left: 24px; right: 24px; zIndex: 50; display: flex; alignItems: center; justifyContent: space-between; gap: 20px; padding: 12px 24px; borderRadius: 0 0 16px 16px; background: rgba(34,38,44,0.42); backdropFilter: blur(18px); borderBottom: 1px solid rgba(255,255,255,0.1);">
     <a href="{{ homeHref }}" onClick="{{ onHome }}" style="display: flex; alignItems: center; gap: 10px; color: #fff; flexShrink: 0;">
       <img src="{{ srcMark }}" alt="ГК «МТУ»" style="height: 28px; width: auto; display: block;">
-      <span style="fontSize: 15px; fontWeight: 600; letterSpacing: 0.02em;">ГК «МТУ»</span>
+      <span style="fontSize: 20px; fontWeight: 600; letterSpacing: 0.03em; lineHeight: 1.15; textTransform: uppercase; whiteSpace: normal; maxWidth: 250px;">Модульные тепловые установки</span>
     </a>
     <div style="display: flex; alignItems: center; gap: 4px; fontSize: 14px; fontWeight: 500; flexShrink: 1; minWidth: 0; whiteSpace: nowrap;">
       <a href="{{ homeHref }}" onClick="{{ onHome }}" style="display: flex; alignItems: center; padding: 8px 12px; borderRadius: 4px; color: #E3A93B; fontSize: 13px; fontWeight: 500; letterSpacing: 0.04em; textTransform: uppercase; whiteSpace: nowrap; transition: background 150ms ease;" style-hover="background: rgba(255,255,255,0.1); color: #E3A93B;">
@@ -479,6 +479,18 @@
             </div>
           </div>
         </sc-for>
+        <div style="gridColumn: 1 / -1; position: relative; overflow: hidden; display: flex; alignItems: center; justifyContent: space-between; gap: 32px; flexWrap: wrap; padding: 36px 40px; borderRadius: 8px; background: rgba(255,255,255,0.03); border: 1px dashed rgba(227,169,59,0.5);">
+          <div style="position: absolute; right: -40px; top: 0; bottom: 0; width: 320px; background: repeating-linear-gradient(135deg, rgba(227,169,59,0.07) 0 2px, transparent 2px 18px); pointerEvents: none;"></div>
+          <div style="position: relative; display: flex; flexDirection: column; gap: 12px; minWidth: 0;">
+            <span style="alignSelf: flex-start; padding: 6px 12px; borderRadius: 4px; background: rgba(227,169,59,0.16); color: #E3A93B; fontSize: 13px; fontWeight: 600; letterSpacing: 0.12em; textTransform: uppercase;">В разработке</span>
+            <h3 style="margin: 0; fontSize: 32px; fontWeight: 600; letterSpacing: -0.02em; color: #fff;">МТУ 360–600</h3>
+            <p style="margin: 0; maxWidth: 620px; fontSize: 17px; lineHeight: 1.6; color: rgba(255,255,255,0.7);">Новая модель для крупных промышленных и коммунальных объектов. Следите за анонсом — расскажем, когда откроем заказ.</p>
+          </div>
+          <div style="position: relative; display: flex; flexDirection: column; gap: 4px; alignItems: flex-end;">
+            <span style="fontSize: 11px; letterSpacing: 0.12em; textTransform: uppercase; color: rgba(255,255,255,0.45);">мощность</span>
+            <span style="fontSize: 28px; fontWeight: 600; color: #E3A93B;">360–600 кВт</span>
+          </div>
+        </div>
       </div>
 
       <sc-if value="{{ modalOpen }}" hint-placeholder-val="{{ false }}">
@@ -1200,7 +1212,7 @@ class Component extends DCLogic {
   catalogData = [
     ["МТУ 10–40", "МТУ для индивидуального жилого строения, бань, теплиц, гаражей, гостевых домов и т. д.", "10–40 кВт", "до 400 м²", "от 301 162 ₽", 1200, 2250, 1000, 2],
     ["МТУ 40–50", "Для складов, производственных и административных зданий, жилых многоквартирных зданий, коммунально-складских, гостиниц, магазинов, автосервисов, спортивных и иных сооружений", "40–50 кВт", "до 500 м²", "от 668 326 ₽", 1800, 2250, 1000, 3],
-    ["МТУ 60–120", "Для складов, производственных и административных зданий, жилых многоквартирных зданий, коммунально-складских, гостиниц, магазинов, автосервисов, спортивных и иных сооружений", "60–120 кВт", "от 501 до 1 200 м²", "от 857 980 ₽", 1800, 2000, 450, 3],
+    ["МТУ 60–120", "Для складов, производственных и административных зданий, жилых многоквартирных зданий, коммунально-складских, гостиниц, магазинов, автосервисов, спортивных и иных сооружений", "60–120 кВт", "от 501 до 2 000 м²", "от 857 980 ₽", 1800, 2000, 450, 3],
     ["МТУ 150–180", "Для складов, производственных и административных зданий, жилых многоквартирных зданий, коммунально-складских, гостиниц, магазинов, автосервисов, спортивных и иных сооружений", "150–180 кВт", "от 1 201 до 1 800 м²", "от 1 683 060 ₽", 1800, 2250, 1000, 3],
     ["МТУ 210–270", "Для складов, производственных и административных зданий, жилых многоквартирных зданий, коммунально-складских, гостиниц, магазинов, автосервисов, спортивных и иных сооружений", "210–270 кВт", "от 1 801 до 2 700 м²", "от 1 936 542 ₽", 2500, 2250, 1000, 4],
     ["МТУ 300–350", "Для складов, производственных и административных зданий, жилых многоквартирных зданий, коммунально-складских, гостиниц, магазинов, автосервисов, спортивных и иных сооружений", "300–350 кВт", "от 2 701 до 5 000 м²", "от 2 689 785 ₽", 3200, 2250, 850, 4]
