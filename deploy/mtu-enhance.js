@@ -58,7 +58,7 @@
     ".mtu-btn:not(.sec):hover::after{transform:translateX(8px)}",
     ".mtu-in{width:100%;box-sizing:border-box;min-height:52px;padding:13px 16px;margin:0 0 12px;border-radius:6px;background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.2);color:#fff;font:400 16px 'IBM Plex Sans',sans-serif}",
     ".mtu-in:focus{border-color:#E3A93B;outline:none}",
-    ".mtu-red{color:#FF3B30;font-weight:700}",
+    ".mtu-red{color:#E3A93B;font-weight:600}",
     ".mtu-steps{display:flex;gap:6px;margin:0 0 20px}.mtu-steps i{flex:1;height:4px;border-radius:2px;background:rgba(255,255,255,.16)}.mtu-steps i.on{background:#E3A93B}",
     ".mtu-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:8px}",
     ".mtu-row>*{flex:1 1 220px}",
